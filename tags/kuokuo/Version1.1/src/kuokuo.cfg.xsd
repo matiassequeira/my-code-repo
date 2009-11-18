@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/kuokuo.cfg"
+	xmlns:tns="http://www.example.org/kuokuo.cfg" elementFormDefault="qualified">
+
+	<element name="configuration" type="tns:configuration-type"></element>
+
+	<complexType name="configuration-type">
+		<sequence>
+			<element name="resources" maxOccurs="1" minOccurs="1">
+				<complexType>
+					<sequence>
+						<element name="resource"
+							type="tns:resource-type">
+						</element>
+					</sequence>
+				</complexType>
+			</element>
+			<element name="index" type="tns:index-type" maxOccurs="1" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="resource-type">
+		<attribute name="path" type="string" use="required" />
+		<attribute name="type" default="other">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="other"></enumeration>
+					<enumeration value="music"></enumeration>
+					<enumeration value="game"></enumeration>
+					<enumeration value="movie"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="include-file" type="boolean" default="true"/>
+		<attribute name="include-folder" type="boolean" default="false"/>
+	</complexType>
+
+	<complexType name="index-type">
+		<sequence>
+			<element name="interval" type="int">
+				<annotation>
+					<documentation>index interval, unit is minutes and 3 hours is default</documentation>
+				</annotation></element>
+		</sequence>
+	</complexType>
+</schema>
