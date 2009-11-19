@@ -18,7 +18,7 @@ import org.apache.lucene.document.Field;
  * Resource reader
  * 
  * @version Nov 12, 2009 7:46:12 PM
- * @author Dingmeng Xue (xue_dingmeng@emc.com)
+ * @author Dingmeng (xuedm79@gmail.com)
  */
 public class ResourceReader
 {

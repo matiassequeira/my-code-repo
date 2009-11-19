@@ -35,7 +35,7 @@ import com.chenlb.mmseg4j.analysis.MaxWordAnalyzer;
  * search service
  * 
  * @version Nov 15, 2009 11:26:04 AM
- * @author Dingmeng Xue (xue_dingmeng@emc.com)
+ * @author Dingmeng (xuedm79@gmail.com)
  */
 public class SearchEngineService
 {

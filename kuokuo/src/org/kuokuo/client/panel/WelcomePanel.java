@@ -10,7 +10,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
  * welcome panel
  * 
  * @version Nov 15, 2009 8:56:23 PM
- * @author Dingmeng Xue (xue_dingmeng@emc.com)
+ * @author Dingmeng (xuedm79@gmail.com)
  */
 public class WelcomePanel extends HorizontalPanel
 {

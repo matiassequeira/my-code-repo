@@ -18,7 +18,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * footer panel
  * 
  * @version Nov 15, 2009 1:56:57 AM
- * @author Dingmeng Xue (xue_dingmeng@emc.com)
+ * @author Dingmeng (xuedm79@gmail.com)
  */
 public class FooterPanel extends VerticalPanel
 {

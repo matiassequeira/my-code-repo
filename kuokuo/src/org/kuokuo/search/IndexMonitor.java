@@ -9,7 +9,7 @@ import org.kuokuo.Configuration;
  * index monitor
  * 
  * @version Nov 16, 2009 9:55:43 AM
- * @author Dingmeng Xue (xue_dingmeng@emc.com)
+ * @author Dingmeng (xuedm79@gmail.com)
  */
 public class IndexMonitor extends Thread
 {

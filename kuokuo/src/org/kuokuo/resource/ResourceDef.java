@@ -8,7 +8,7 @@ package org.kuokuo.resource;
  * Folder source
  * 
  * @version Nov 12, 2009 6:40:51 PM
- * @author Dingmeng Xue (xue_dingmeng@emc.com)
+ * @author Dingmeng (xuedm79@gmail.com)
  */
 public class ResourceDef
 {

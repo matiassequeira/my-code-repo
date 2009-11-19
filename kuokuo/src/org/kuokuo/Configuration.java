@@ -19,7 +19,7 @@ import org.w3c.dom.Node;
  * configuration
  * 
  * @version Nov 18, 2009 9:49:00 AM
- * @author Dingmeng Xue (xue_dingmeng@emc.com)
+ * @author Dingmeng (xuedm79@gmail.com)
  */
 public class Configuration
 {
