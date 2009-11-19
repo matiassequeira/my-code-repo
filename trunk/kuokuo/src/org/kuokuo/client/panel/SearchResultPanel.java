@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * search result
  * 
  * @version Nov 15, 2009 9:55:30 AM
- * @author Dingmeng Xue (xue_dingmeng@emc.com)
+ * @author Dingmeng (xuedm79@gmail.com)
  */
 public class SearchResultPanel extends VerticalPanel
 {

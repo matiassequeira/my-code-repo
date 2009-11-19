@@ -13,7 +13,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * search result item
  * 
  * @version Nov 15, 2009 9:37:54 AM
- * @author Dingmeng Xue (xue_dingmeng@emc.com)
+ * @author Dingmeng (xuedm79@gmail.com)
  */
 public class SearchResultItemPanel extends VerticalPanel
 {

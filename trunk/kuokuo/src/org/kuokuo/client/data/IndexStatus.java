@@ -9,7 +9,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  * index status
  * 
  * @version Nov 15, 2009 12:00:23 PM
- * @author Dingmeng Xue (xue_dingmeng@emc.com)
+ * @author Dingmeng (xuedm79@gmail.com)
  */
 public class IndexStatus implements IsSerializable
 {

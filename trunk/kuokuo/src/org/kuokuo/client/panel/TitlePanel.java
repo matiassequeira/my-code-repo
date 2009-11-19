@@ -20,7 +20,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * Title Panel
  * 
  * @version Nov 15, 2009 1:34:27 AM
- * @author Dingmeng Xue (xue_dingmeng@emc.com)
+ * @author Dingmeng (xuedm79@gmail.com)
  */
 public class TitlePanel extends HorizontalPanel implements ClickHandler, KeyPressHandler
 {

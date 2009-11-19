@@ -8,7 +8,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * TODO to change this type comment
  * @version Nov 18, 2009 11:15:50 AM
- * @author Dingmeng Xue (xue_dingmeng@emc.com)
+ * @author Dingmeng (xuedm79@gmail.com)
  */
 public class ConfigBean implements IsSerializable
 {

@@ -9,7 +9,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  * query result item
  * 
  * @version Nov 13, 2009 3:59:14 PM
- * @author Dingmeng Xue (xue_dingmeng@emc.com)
+ * @author Dingmeng (xuedm79@gmail.com)
  */
 public class QueryResultItem implements IsSerializable
 {

@@ -11,7 +11,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  * data for query result
  * 
  * @version Nov 13, 2009 3:58:12 PM
- * @author Dingmeng Xue (xue_dingmeng@emc.com)
+ * @author Dingmeng (xuedm79@gmail.com)
  */
 public class QueryResult implements IsSerializable
 {
