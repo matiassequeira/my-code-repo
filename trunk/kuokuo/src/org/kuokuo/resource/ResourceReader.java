@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Logger;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -21,6 +22,9 @@ import org.apache.lucene.document.Field;
  */
 public class ResourceReader
 {
+	
+	private static Logger logger= Logger.getLogger(ResourceReader.class.getName());
+	
     public ResourceReader(ResourceDef source)
     {
         rootPath = source.getRootPath();
@@ -40,6 +44,9 @@ public class ResourceReader
     private void loadFiles(File path)
     {
         File[] files = path.listFiles();
+        if(files==null){
+        	throw new IllegalArgumentException("Fail to open folder "+path);
+        }
         for (File file : files)
         {
             if (!file.exists())
@@ -59,6 +66,7 @@ public class ResourceReader
                 loadFiles(file);
             }
         }
+        logger.info("Scanned "+path);
     }
 
     public Iterator<Document> iterator()
