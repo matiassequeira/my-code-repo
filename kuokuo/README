@@ -1,0 +1,9 @@
+==READ ME==
+
+The following SDK/libraries are required to build/run the project
+* JDK 1.5+
+* Google Web Toolkit (GWT) 1.6+
+* Apache Lucene 2.9+
+* mmseg4j 1.6+
+
+To run the project, please update src/kuokuo.cfg.xml to point to the data/media folder.
