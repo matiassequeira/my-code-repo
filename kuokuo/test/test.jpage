@@ -1,0 +1,2 @@
+System.out.println(new java.io.File("~").getCanonicalPath());
+System.out.println(new java.io.File("/Users/Jove/Movies").exists());
