@@ -73,21 +73,6 @@ public class SearchEngineService
 
     protected IndexMonitor monitor = new IndexMonitor();
 
-    public List<QueryResultItem> getUpdateItems()
-    {
-        List<QueryResultItem> list = new ArrayList<QueryResultItem>();
-
-        for (int i = updates.length - 1; i >= 0; i--)
-        {
-            if (updates[i] != null)
-            {
-                list.add(updates[i]);
-            }
-        }
-
-        return list;
-    }
-
     private SearchEngineService()
     {
         //this is almost the 1st server side class initied
@@ -196,6 +181,31 @@ public class SearchEngineService
     {
         return status;
     }
+    
+    //TODO: query to merge this with query(queryStr) method. We may get the latest media via querying lucene index
+    public QueryResult getUpdateItems() throws Exception
+    {
+        List<QueryResultItem> list = new ArrayList<QueryResultItem>();
+
+        for (int i = updates.length - 1; i >= 0; i--)
+        {
+            if (updates[i] != null)
+            {
+                list.add(updates[i]);
+                if(updates[i].getHighlightName()==null){
+                    updates[i].setHighlightName(updates[i].getName());
+                }
+                if(updates[i].doubanURL==null){
+                    loadDataFromDouban(updates[i]);
+                }
+            }
+        }
+        
+        QueryResult rv = new QueryResult();
+        rv.setItems(list);
+
+        return rv;
+    }
 
     public QueryResult query(String queryStr) throws Exception
     {
@@ -227,15 +237,19 @@ public class SearchEngineService
             list.add(item);
             
             //add data from douban
-            DoubanResource dbResource = douban.getInfo(item.getName(),DoubanResourceType.MOVIE);
-            if(dbResource!=null){
-                item.doubanURL=dbResource.selfURL;
-                item.imageURL=dbResource.imageURL;
-            }
+            loadDataFromDouban(item);
         }
 
         result.setItems(list);
         status.setQueryCount(status.getQueryCount() + 1);
         return result;
+    }
+    
+    private void loadDataFromDouban(QueryResultItem item) throws Exception{
+        DoubanResource dbResource = douban.getInfo(item.getName(),DoubanResourceType.MOVIE);
+        if(dbResource!=null){
+            item.doubanURL=dbResource.selfURL;
+            item.imageURL=dbResource.imageURL;
+        }
     }
 }

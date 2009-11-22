@@ -1,10 +1,7 @@
 package org.kuokuo.server;
 
-import java.util.List;
-
 import org.kuokuo.client.data.IndexStatus;
 import org.kuokuo.client.data.QueryResult;
-import org.kuokuo.client.data.QueryResultItem;
 import org.kuokuo.client.service.SearchService;
 import org.kuokuo.search.SearchEngineService;
 
@@ -38,8 +35,16 @@ public class SearchServiceImpl extends RemoteServiceServlet implements SearchSer
         return SearchEngineService.getInstance().getIndexStatus();
     }
     
-    public List<QueryResultItem> getUpdateItems()
+    public QueryResult getUpdateItems()
     {
-        return SearchEngineService.getInstance().getUpdateItems();
+        try
+        {
+            return SearchEngineService.getInstance().getUpdateItems();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return new QueryResult();
     }
 }

@@ -1,10 +1,7 @@
 package org.kuokuo.client.service;
 
-import java.util.List;
-
 import org.kuokuo.client.data.IndexStatus;
 import org.kuokuo.client.data.QueryResult;
-import org.kuokuo.client.data.QueryResultItem;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -17,5 +14,5 @@ public interface SearchServiceAsync
 
     public void getIndexStatus(AsyncCallback<IndexStatus> callback);
 
-    public void getUpdateItems(AsyncCallback<List<QueryResultItem>> callback);
+    public void getUpdateItems(AsyncCallback<QueryResult> callback);
 }
