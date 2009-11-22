@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
@@ -42,6 +43,8 @@ import com.chenlb.mmseg4j.analysis.MaxWordAnalyzer;
  */
 public class SearchEngineService
 {
+    private static Logger logger=Logger.getLogger(SearchEngineService.class.getName());
+    
     private static SearchEngineService instance;
 
     private static final String initLock = "";
@@ -87,8 +90,17 @@ public class SearchEngineService
 
     private SearchEngineService()
     {
+        //this is almost the 1st server side class initied
         try
         {
+            //config java.util.logging
+            //logger.info("loading java.util.logging configuration");
+            //LogManager.getLogManager().readConfiguration(this.getClass().getResourceAsStream("/logging.properties"));
+            //logger= Logger.getLogger(SearchEngineService.class.getName());
+            //logger.fine("java.util.logging configuration loaded");
+            
+            logger.info("Starting search engine service");
+            
             status = new IndexStatus();
             status.setStartDate(new SimpleDateFormat("MMM d").format(new Date()));
 
@@ -217,7 +229,7 @@ public class SearchEngineService
             //add data from douban
             DoubanResource dbResource = douban.getInfo(item.getName(),DoubanResourceType.MOVIE);
             if(dbResource!=null){
-                item.doubanID=dbResource.id;
+                item.doubanURL=dbResource.selfURL;
                 item.imageURL=dbResource.imageURL;
             }
         }
