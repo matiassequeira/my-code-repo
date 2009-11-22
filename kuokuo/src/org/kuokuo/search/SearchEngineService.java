@@ -28,6 +28,9 @@ import org.kuokuo.client.data.QueryResult;
 import org.kuokuo.client.data.QueryResultItem;
 import org.kuokuo.resource.ResourceDef;
 import org.kuokuo.resource.ResourceReader;
+import org.kuokuo.server.CachedDoubanService;
+import org.kuokuo.server.DoubanResource;
+import org.kuokuo.server.DoubanResourceType;
 
 import com.chenlb.mmseg4j.analysis.MaxWordAnalyzer;
 
@@ -96,6 +99,8 @@ public class SearchEngineService
 
             searcher = new IndexSearcher(directory, true);
             monitor.start();
+            
+            douban=new CachedDoubanService();
         }
         catch (Exception e)
         {
@@ -173,6 +178,8 @@ public class SearchEngineService
 
     private IndexStatus status;
 
+    private CachedDoubanService douban;
+
     public IndexStatus getIndexStatus()
     {
         return status;
@@ -206,6 +213,13 @@ public class SearchEngineService
             item.setPath(doc.getField("path").stringValue());
             item.setFolder(Boolean.getBoolean(doc.getField("isFolder").stringValue()));
             list.add(item);
+            
+            //add data from douban
+            DoubanResource dbResource = douban.getInfo(item.getName(),DoubanResourceType.MOVIE);
+            if(dbResource!=null){
+                item.doubanID=dbResource.id;
+                item.imageURL=dbResource.imageURL;
+            }
         }
 
         result.setItems(list);

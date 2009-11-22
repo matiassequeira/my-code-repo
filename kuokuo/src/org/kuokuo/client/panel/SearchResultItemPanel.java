@@ -5,35 +5,48 @@ package org.kuokuo.client.panel;
 
 import org.kuokuo.client.data.QueryResultItem;
 
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
  * search result item
- * 
- * @version Nov 15, 2009 9:37:54 AM
- * @author Dingmeng (xuedm79@gmail.com)
  */
-public class SearchResultItemPanel extends VerticalPanel
+public class SearchResultItemPanel extends Composite
 {
+    //VerticalPanel
     public SearchResultItemPanel(QueryResultItem item)
     {
-        this.setSpacing(3);
+        HorizontalPanel panel = new HorizontalPanel();
+        initWidget(panel);
+        panel.setSpacing(5);
+        panel.add(new HTML("<img src=\""+item.imageURL+"\">"));
         
-        HorizontalPanel firstRow = new HorizontalPanel();
-        //firstRow.add(new HTML("<img width=\"16\" src=\"folder.gif\">"));
-        firstRow.add(new HTML("&nbsp;"));
-        firstRow.add(new HTML("<b>" + item.getHighlightName() + "</b>"));
-        firstRow.add(new HTML("&nbsp;"));
-        firstRow.add(new HTML("- <i>" + item.getScore() + "</i>"));
-        this.add(firstRow);
+        VerticalPanel vBox = new VerticalPanel();
+        panel.add(vBox);
+        
+        {
+            HorizontalPanel row = new HorizontalPanel();
+            //firstRow.add(new HTML("<img width=\"16\" src=\"folder.gif\">"));
+            row.add(new HTML("<b>" + item.getHighlightName() + "</b>"));
+            row.add(new HTML("&nbsp;"));
+            row.add(new HTML("<a href=\"http://www.douban.com/subject/"+item.doubanID+"/\">douban</a>"));
+            //firstRow.add(new HTML("- <i>" + item.getScore() + "</i>"));
+            vBox.add(row);
+        }
+        
+        {
+            vBox.add(new Label(item.getLastModified()));
+        }
 
-        HorizontalPanel secondRow = new HorizontalPanel();
-        secondRow.add(new HTML("<a href=\"" + item.getPath() +  "\" target=\"blank\">" + trimName(item.getPath()) +  "</a>"));
-        secondRow.add(new HTML("&nbsp;"));
-        secondRow.add(new HTML(item.getLastModified()));
-        this.add(secondRow);
+        {
+            HorizontalPanel row = new HorizontalPanel();
+            row.add(new HTML("<a href=\"" + item.getPath() +  "\" target=\"blank\">" + trimName(item.getPath()) +  "</a>"));
+            row.add(new HTML("&nbsp;"));
+            vBox.add(row);
+        }
     }
     
     private String trimName(String name)
