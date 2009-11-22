@@ -28,6 +28,10 @@ public class QueryResultItem implements IsSerializable
     private boolean isFolder;
 
     private long timestamp;
+    
+    public String imageURL="http://t.douban.com/pics/movie-default-small.gif";
+    
+    public String doubanID="";
 
     /**
      * @return Returns the timestamp.
