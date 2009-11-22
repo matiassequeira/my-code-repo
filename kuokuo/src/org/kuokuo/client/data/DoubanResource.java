@@ -1,4 +1,4 @@
-package org.kuokuo.server;
+package org.kuokuo.client.data;
 
 import java.io.Serializable;
 
@@ -15,13 +15,4 @@ public class DoubanResource implements Serializable
     public DoubanResource()
     {
     }
-
-    public DoubanResource(SubjectEntry entry)
-    {
-        title=entry.getTitle().getPlainText();
-        imageURL=entry.getLink("image", null).getHref();
-        //id=entry.getId();
-        selfURL=entry.getLink("alternate", null).getHref();
-    }
-
 }

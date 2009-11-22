@@ -29,10 +29,6 @@ public class QueryResultItem implements IsSerializable
 
     private long timestamp;
     
-    public String imageURL="http://t.douban.com/pics/movie-default-small.gif";
-    
-    public String doubanURL;
-
     /**
      * @return Returns the timestamp.
      */
