@@ -45,7 +45,7 @@ public class TitlePanel extends HorizontalPanel implements ClickHandler, KeyPres
     public TitlePanel()
     {
         this.setSpacing(5);
-        logo = new HTML("<img height='90' src='images/kuokuo.jpg'>");
+        logo = new HTML("<img height='90' src='images/kuokuo.jpg' style='cursor:hand'>");
         logo.addClickHandler(this);
         this.add(logo);
         
