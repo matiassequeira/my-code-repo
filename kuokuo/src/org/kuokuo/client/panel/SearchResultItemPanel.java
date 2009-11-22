@@ -22,7 +22,7 @@ public class SearchResultItemPanel extends Composite
         HorizontalPanel panel = new HorizontalPanel();
         initWidget(panel);
         panel.setSpacing(5);
-        panel.add(new HTML("<img src=\""+item.imageURL+"\">"));
+        panel.add(new HTML("<a href=\""+item.doubanURL+"\"><img border=0 src=\""+item.imageURL+"\"></a>"));
         
         VerticalPanel vBox = new VerticalPanel();
         panel.add(vBox);
@@ -32,7 +32,7 @@ public class SearchResultItemPanel extends Composite
             //firstRow.add(new HTML("<img width=\"16\" src=\"folder.gif\">"));
             row.add(new HTML("<b>" + item.getHighlightName() + "</b>"));
             row.add(new HTML("&nbsp;"));
-            row.add(new HTML("<a href=\"http://www.douban.com/subject/"+item.doubanID+"/\">douban</a>"));
+            //row.add(new HTML("<a href=\"http://www.douban.com/subject/"+item.doubanID+"/\">douban</a>"));
             //firstRow.add(new HTML("- <i>" + item.getScore() + "</i>"));
             vBox.add(row);
         }
