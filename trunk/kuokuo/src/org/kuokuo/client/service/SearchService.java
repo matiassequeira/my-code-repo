@@ -1,5 +1,6 @@
 package org.kuokuo.client.service;
 
+import org.kuokuo.client.data.DoubanResource;
 import org.kuokuo.client.data.IndexStatus;
 import org.kuokuo.client.data.QueryResult;
 
@@ -17,4 +18,6 @@ public interface SearchService extends RemoteService
     public IndexStatus getIndexStatus();
     
     public QueryResult getUpdateItems();
+    
+    public DoubanResource getDoubanInfo(String name) throws Exception;
 }

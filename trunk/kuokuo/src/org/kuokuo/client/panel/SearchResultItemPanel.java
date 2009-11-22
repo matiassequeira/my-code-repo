@@ -3,12 +3,18 @@
  */
 package org.kuokuo.client.panel;
 
+import org.kuokuo.client.data.DoubanResource;
 import org.kuokuo.client.data.QueryResultItem;
+import org.kuokuo.client.service.SearchService;
+import org.kuokuo.client.service.SearchServiceAsync;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
@@ -16,13 +22,18 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class SearchResultItemPanel extends Composite
 {
-    //VerticalPanel
+    private final SearchServiceAsync searchService = GWT.create(SearchService.class);
+    private SimplePanel doubanImage;
+
     public SearchResultItemPanel(QueryResultItem item)
     {
         HorizontalPanel panel = new HorizontalPanel();
         initWidget(panel);
         panel.setSpacing(5);
-        panel.add(new HTML("<a href=\""+item.doubanURL+"\"><img border=0 src=\""+item.imageURL+"\"></a>"));
+        //panel.add(new HTML("<a href=\""+item.doubanURL+"\"><img border=0 src=\""+item.imageURL+"\"></a>"));
+        doubanImage = new SimplePanel();
+        doubanImage.setWidget(new HTML("<a href=\"#\"><img border=0 src=\"http://t.douban.com/pics/movie-default-small.gif\"></a>"));
+        panel.add(doubanImage);
         
         VerticalPanel vBox = new VerticalPanel();
         panel.add(vBox);
@@ -47,6 +58,22 @@ public class SearchResultItemPanel extends Composite
             row.add(new HTML("&nbsp;"));
             vBox.add(row);
         }
+        
+        //ajax load douban info
+        searchService.getDoubanInfo(item.getName(), new AsyncCallback<DoubanResource>()
+        {
+            
+            public void onSuccess(DoubanResource result)
+            {
+                doubanImage.setWidget(new HTML("<a href=\""+result.selfURL+"\"><img border=0 src=\""+result.imageURL+"\"></a>"));
+            }
+            
+            public void onFailure(Throwable caught)
+            {
+                GWT.log("fail to load douban info", caught);
+            }
+        });
+        
     }
     
     private String trimName(String name)

@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.logging.Logger;
 
+import org.kuokuo.client.data.DoubanResource;
+
 import com.google.gdata.client.douban.DoubanService;
 import com.google.gdata.data.douban.SubjectEntry;
 import com.google.gdata.data.douban.SubjectFeed;
@@ -51,7 +53,7 @@ public class CachedDoubanService
         }
         SubjectEntry entry = list.get(0);
 
-        DoubanResource rv = new DoubanResource(entry);
+        DoubanResource rv = DoubanResourceFactory.create(entry);
         switch (type)
         {
         case MOVIE:

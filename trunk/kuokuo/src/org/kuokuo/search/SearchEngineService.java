@@ -24,13 +24,13 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
 import org.kuokuo.Configuration;
+import org.kuokuo.client.data.DoubanResource;
 import org.kuokuo.client.data.IndexStatus;
 import org.kuokuo.client.data.QueryResult;
 import org.kuokuo.client.data.QueryResultItem;
 import org.kuokuo.resource.ResourceDef;
 import org.kuokuo.resource.ResourceReader;
 import org.kuokuo.server.CachedDoubanService;
-import org.kuokuo.server.DoubanResource;
 import org.kuokuo.server.DoubanResourceType;
 
 import com.chenlb.mmseg4j.analysis.MaxWordAnalyzer;
@@ -195,9 +195,9 @@ public class SearchEngineService
                 if(updates[i].getHighlightName()==null){
                     updates[i].setHighlightName(updates[i].getName());
                 }
-                if(updates[i].doubanURL==null){
-                    loadDataFromDouban(updates[i]);
-                }
+//                if(updates[i].doubanURL==null){
+//                    loadDataFromDouban(updates[i]);
+//                }
             }
         }
         
@@ -237,7 +237,7 @@ public class SearchEngineService
             list.add(item);
             
             //add data from douban
-            loadDataFromDouban(item);
+            //loadDataFromDouban(item);
         }
 
         result.setItems(list);
@@ -245,11 +245,8 @@ public class SearchEngineService
         return result;
     }
     
-    private void loadDataFromDouban(QueryResultItem item) throws Exception{
-        DoubanResource dbResource = douban.getInfo(item.getName(),DoubanResourceType.MOVIE);
-        if(dbResource!=null){
-            item.doubanURL=dbResource.selfURL;
-            item.imageURL=dbResource.imageURL;
-        }
+    public DoubanResource loadDataFromDouban(String name) throws Exception{
+        DoubanResource dbResource = douban.getInfo(name,DoubanResourceType.MOVIE);
+        return dbResource;
     }
 }

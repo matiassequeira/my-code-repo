@@ -1,5 +1,6 @@
 package org.kuokuo.server;
 
+import org.kuokuo.client.data.DoubanResource;
 import org.kuokuo.client.data.IndexStatus;
 import org.kuokuo.client.data.QueryResult;
 import org.kuokuo.client.service.SearchService;
@@ -46,5 +47,10 @@ public class SearchServiceImpl extends RemoteServiceServlet implements SearchSer
             e.printStackTrace();
         }
         return new QueryResult();
+    }
+
+    public DoubanResource getDoubanInfo(String name) throws Exception
+    {
+        return SearchEngineService.getInstance().loadDataFromDouban(name);
     }
 }
