@@ -49,7 +49,7 @@ public class ResourceReader
         }
         for (File file : files)
         {
-            if (!file.exists())
+            if (needIgnoreFile(file))
             {
                 continue;
             }
@@ -67,6 +67,26 @@ public class ResourceReader
             }
         }
         logger.info("Scanned "+path);
+    }
+    
+    /**
+     * Determine whether the specified file need ignore while indexing
+     * @param file
+     * @return true if need ignore
+     */
+    private static boolean needIgnoreFile(File file){
+        //Avoid NPE, should never happen
+        if(file==null){
+            return true;
+        }
+        if(!file.exists()){
+            return true;
+        }
+        //hide some system files such as .DS_Store on Mac OS, or other hidden files
+        if(file.isHidden()){
+            return true;
+        }
+        return false;
     }
 
     public Iterator<Document> iterator()
