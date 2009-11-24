@@ -24,8 +24,11 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
 import org.kuokuo.Configuration;
+import org.kuokuo.client.Search;
 import org.kuokuo.client.data.DoubanResource;
 import org.kuokuo.client.data.IndexStatus;
+import org.kuokuo.client.data.MovieResultItem;
+import org.kuokuo.client.data.PagingUpdateItems;
 import org.kuokuo.client.data.QueryResult;
 import org.kuokuo.client.data.QueryResultItem;
 import org.kuokuo.resource.ResourceDef;
@@ -109,7 +112,7 @@ public class SearchEngineService
     {
         status.setDocCount(0);
         writer = new IndexWriter(directory, analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED);
-        updates = new QueryResultItem[15];
+        updates = new QueryResultItem[100];
 
         long start = System.currentTimeMillis();
         List<ResourceDef> resourceDefs = Configuration.getInstance().getResourceDefs();
@@ -163,7 +166,15 @@ public class SearchEngineService
             updates[i] = updates[i + 1];
         }
 
-        QueryResultItem item = new QueryResultItem();
+        QueryResultItem item;
+        if(Search.TYPE_MOVIE.equals(doc.getField("type").stringValue()))
+        {
+            item = new MovieResultItem();
+        }
+        else
+        {
+            item = new QueryResultItem();
+        }
         item.setName(doc.getField("name").stringValue());
         item.setLastModified(doc.getField("lastModified").stringValue());
         item.setTimestamp(Long.parseLong(doc.getField("timestamp").stringValue()));
@@ -183,11 +194,21 @@ public class SearchEngineService
     }
     
     //TODO: query to merge this with query(queryStr) method. We may get the latest media via querying lucene index
-    public QueryResult getUpdateItems() throws Exception
+    public PagingUpdateItems getUpdateItems(int from, int len) throws Exception
     {
         List<QueryResultItem> list = new ArrayList<QueryResultItem>();
 
-        for (int i = updates.length - 1; i >= 0; i--)
+        if (from < 0)
+            from = 0;
+        if (from > updates.length)
+            from = updates.length - 1;
+        
+        //the update items are reverse order in array
+        int start = updates.length - 1 - from;
+        int end = start - len + 1;
+        if (end < 0)
+            end = 0;
+        for (int i = start; i >= end; i--)
         {
             if (updates[i] != null)
             {
@@ -201,9 +222,10 @@ public class SearchEngineService
             }
         }
         
-        QueryResult rv = new QueryResult();
+        PagingUpdateItems rv = new PagingUpdateItems();
+        rv.setCount(updates.length);
         rv.setItems(list);
-
+        rv.setStart(from);
         return rv;
     }
 
@@ -226,7 +248,15 @@ public class SearchEngineService
         for (int i = 0; i < count; i++)
         {
             Document doc = searcher.doc(rs.scoreDocs[i].doc);
-            QueryResultItem item = new QueryResultItem();
+            QueryResultItem item;
+            if(Search.TYPE_MOVIE.equals(doc.getField("type")))
+            {
+                item = new MovieResultItem();
+            }
+            else
+            {
+                item = new QueryResultItem();
+            }
             item.setScore(rs.scoreDocs[i].score);
             item.setName(doc.getField("name").stringValue());
             item.setHighlightName(highlighter.getBestFragment(analyzer, "name", doc.getField("name").stringValue()));

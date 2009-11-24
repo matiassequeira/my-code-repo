@@ -3,14 +3,18 @@
  */
 package org.kuokuo.client.panel;
 
-import org.kuokuo.client.data.QueryResult;
-import org.kuokuo.client.service.SearchService;
+import java.util.List;
+
+import org.kuokuo.client.Search;
+import org.kuokuo.client.ServiceFactory;
+import org.kuokuo.client.data.PagingUpdateItems;
+import org.kuokuo.client.data.QueryResultItem;
 import org.kuokuo.client.service.SearchServiceAsync;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
@@ -19,30 +23,59 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * @version Nov 15, 2009 9:47:44 PM
  * @author Dingmeng (xuedm79@gmail.com)
  */
-public class UpdatesPanel extends Composite
+public class UpdatesPanel extends VerticalPanel
 {
-    private final SearchServiceAsync searchService = GWT.create(SearchService.class);
-    private SearchResultPanel resultPanel;
+    protected VerticalPanel contentPanel;
+
+    protected HorizontalPanel footerPanel;
 
     public UpdatesPanel()
     {
-        VerticalPanel panel = new VerticalPanel();
-        initWidget(panel);
-        panel.setSpacing(10);
-        panel.add(new HTML("<b><i>最近更新</i></b>"));
-        resultPanel = new SearchResultPanel();
-        panel.add(resultPanel);
-        searchService.getUpdateItems(new AsyncCallback<QueryResult>()
+        this.setSpacing(10);
+        this.add(new HTML("<b><i>最近更新</i></b>"));
+
+        contentPanel = new VerticalPanel();
+        this.add(contentPanel);
+        this.setCellHorizontalAlignment(contentPanel, ALIGN_LEFT);
+
+        footerPanel = new HorizontalPanel();
+        this.add(footerPanel);
+        this.setCellHorizontalAlignment(footerPanel, ALIGN_RIGHT);
+
+        SearchServiceAsync searchService = ServiceFactory.SERVICE_SEARCH;
+        searchService.getUpdateItems(0, 10, new AsyncCallback<PagingUpdateItems>()
         {
-            public void onSuccess(QueryResult result)
+            public void onSuccess(PagingUpdateItems items)
             {
-                resultPanel.bindData(result);
+                bindData(items);
             }
 
             public void onFailure(Throwable caught)
             {
-                resultPanel.bindData(null);
+
             }
         });
+    }
+
+    protected void bindData(PagingUpdateItems items)
+    {
+        contentPanel.clear();
+        List<QueryResultItem> list = items.getItems();
+        
+        for(QueryResultItem item : list)
+        {
+            Composite resultItem = null;
+            if(item.checkType(Search.TYPE_MOVIE))
+            {
+                resultItem = new MovieItemPanel(item);
+            }
+            else
+            {
+                resultItem = new SearchResultItemPanel(item);
+            }
+            contentPanel.add(resultItem);
+        }
+        
+        
     }
 }

@@ -21,6 +21,8 @@ public class QueryResult implements IsSerializable
 
     private String query;
 
+    private int count;
+    
     /**
      * @return Returns the items.
      */
@@ -72,4 +74,19 @@ public class QueryResult implements IsSerializable
         this.query = query;
     }
 
+    /**
+     * @return Returns the count.
+     */
+    public int getCount()
+    {
+        return count;
+    }
+
+    /**
+     * @param count The count to set.
+     */
+    public void setCount(int count)
+    {
+        this.count = count;
+    }
 }

@@ -3,11 +3,10 @@
  */
 package org.kuokuo.client.panel;
 
+import org.kuokuo.client.ServiceFactory;
 import org.kuokuo.client.data.IndexStatus;
-import org.kuokuo.client.service.SearchService;
 import org.kuokuo.client.service.SearchServiceAsync;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTML;
@@ -22,9 +21,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class FooterPanel extends VerticalPanel
 {
-
-    private final SearchServiceAsync searchService = GWT.create(SearchService.class);
-
     protected HTML status;
 
     public FooterPanel()
@@ -40,7 +36,7 @@ public class FooterPanel extends VerticalPanel
 
         HorizontalPanel secondRow = new HorizontalPanel();
         secondRow.setSpacing(5);
-        secondRow.add(new HTML("Kuokuo 1.1"));
+        secondRow.add(new HTML("Kuokuo 1.2"));
         secondRow.add(new HTML("<a href='mailto:xuedm79@gmail.com'>报告错误</a>"));
         secondRow.add(new HTML("Power by GWT, Lucene & MMSeg4J"));
         this.add(secondRow);
@@ -48,6 +44,8 @@ public class FooterPanel extends VerticalPanel
 
     public void refresh()
     {
+        SearchServiceAsync searchService = ServiceFactory.SERVICE_SEARCH;
+        
         searchService.getIndexStatus(new AsyncCallback<IndexStatus>()
         {
 

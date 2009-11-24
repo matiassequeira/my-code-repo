@@ -28,7 +28,19 @@ public class QueryResultItem implements IsSerializable
     private boolean isFolder;
 
     private long timestamp;
-    
+
+    /**
+     * check type of query result item. For special type, class should extend
+     * this class.
+     * 
+     * @param type
+     * @return
+     */
+    public boolean checkType(String type)
+    {
+        return false;
+    }
+
     /**
      * @return Returns the timestamp.
      */
