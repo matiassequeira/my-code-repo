@@ -10,6 +10,7 @@ import java.util.Vector;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.kuokuo.client.Search;
 import org.kuokuo.resource.ResourceDef;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -108,7 +109,7 @@ public class Configuration
         }
         ResourceDef def = new ResourceDef();
         def.setRootPath(el.getAttribute("path"));
-        def.setType((el.hasAttribute("type")) ? el.getAttribute("type") : ResourceDef.TYPE_OTHER);
+        def.setType((el.hasAttribute("type")) ? el.getAttribute("type") : Search.TYPE_OTHER);
         def.setIncludeFolder((el.hasAttribute("include-folder")) ? Boolean.parseBoolean(el.getAttribute("include-folder")) : true);
         def.setIncludeFile((el.hasAttribute("include-file")) ? Boolean.parseBoolean(el.getAttribute("include-file")) : false);
         return def;

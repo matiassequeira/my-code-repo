@@ -12,14 +12,6 @@ package org.kuokuo.resource;
  */
 public class ResourceDef
 {
-    public static final String TYPE_MOVIE = "movie";
-
-    public static final String TYPE_GAME = "game";
-
-    public static final String TYPE_MUSIC = "music";
-
-    public static final String TYPE_OTHER = "other";
-    
     private String rootPath;
 
     private String type;

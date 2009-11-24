@@ -30,7 +30,8 @@ public class ResourceReader
         rootPath = source.getRootPath();
         includeFolder = source.isIncludeFolder();
         includeFile = source.isIncludeFile();
-
+        type = source.getType();
+        
         files = new Vector<File>();
         loadFiles(new File(rootPath));
     }
@@ -41,6 +42,8 @@ public class ResourceReader
 
     protected boolean includeFile = false;
 
+    protected String type;
+    
     private void loadFiles(File path)
     {
         File[] files = path.listFiles();
@@ -109,6 +112,7 @@ public class ResourceReader
         }
         
         doc.add(new Field("name", name, Field.Store.YES, Field.Index.ANALYZED));
+        doc.add(new Field("type", type, Field.Store.YES, Field.Index.NO));
         doc.add(new Field("suffix", suffix, Field.Store.YES, Field.Index.NO));
         doc.add(new Field("path", file.getAbsolutePath(), Field.Store.YES, Field.Index.NO));
         doc.add(new Field("lastModified", sdf.format(new Date(file.lastModified())), Field.Store.YES, Field.Index.NO));

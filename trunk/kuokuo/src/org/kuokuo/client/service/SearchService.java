@@ -2,6 +2,7 @@ package org.kuokuo.client.service;
 
 import org.kuokuo.client.data.DoubanResource;
 import org.kuokuo.client.data.IndexStatus;
+import org.kuokuo.client.data.PagingUpdateItems;
 import org.kuokuo.client.data.QueryResult;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -17,7 +18,9 @@ public interface SearchService extends RemoteService
     
     public IndexStatus getIndexStatus();
     
-    public QueryResult getUpdateItems();
+    public PagingUpdateItems getUpdateItems();
+    
+    public PagingUpdateItems getUpdateItems(int from, int len);
     
     public DoubanResource getDoubanInfo(String name) throws Exception;
 }

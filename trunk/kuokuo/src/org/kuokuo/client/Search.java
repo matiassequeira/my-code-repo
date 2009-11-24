@@ -37,6 +37,14 @@ public class Search implements EntryPoint
     private static final String SERVER_ERROR = "An error occurred while " + "attempting to contact the server. Please check your network "
             + "connection and try again.";
 
+    public static final String TYPE_MOVIE = "movie";
+
+    public static final String TYPE_GAME = "game";
+
+    public static final String TYPE_MUSIC = "music";
+
+    public static final String TYPE_OTHER = "other";
+
     /**
      * Create a remote service proxy to talk to the server-side Greeting
      * service.

@@ -5,9 +5,11 @@ package org.kuokuo.client.panel;
 
 import java.util.List;
 
+import org.kuokuo.client.Search;
 import org.kuokuo.client.data.QueryResult;
 import org.kuokuo.client.data.QueryResultItem;
 
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -48,7 +50,16 @@ public class SearchResultPanel extends VerticalPanel
         resultRow.clear();
         for (QueryResultItem item : resultItems)
         {
-            resultRow.add(new SearchResultItemPanel(item));
+            Composite resultItem = null;
+            if(item.checkType(Search.TYPE_MOVIE))
+            {
+                resultItem = new MovieItemPanel(item);
+            }
+            else
+            {
+                resultItem = new SearchResultItemPanel(item);
+            }
+            resultRow.add(resultItem);
         }
 
         String status = "找到相关对象" + resultItems.size() + "个，用时" + result.getTime() + "秒";
