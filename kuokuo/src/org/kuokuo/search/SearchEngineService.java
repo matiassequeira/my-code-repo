@@ -6,8 +6,10 @@ package org.kuokuo.search;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.apache.lucene.analysis.Analyzer;
@@ -113,7 +115,8 @@ public class SearchEngineService
         status.setDocCount(0);
         writer = new IndexWriter(directory, analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED);
         updates = new QueryResultItem[100];
-
+        doubanMaps = new HashMap<String, DoubanResource>();
+        
         long start = System.currentTimeMillis();
         List<ResourceDef> resourceDefs = Configuration.getInstance().getResourceDefs();
         for (ResourceDef def : resourceDefs)
@@ -249,7 +252,7 @@ public class SearchEngineService
         {
             Document doc = searcher.doc(rs.scoreDocs[i].doc);
             QueryResultItem item;
-            if(Search.TYPE_MOVIE.equals(doc.getField("type")))
+            if(Search.TYPE_MOVIE.equals(doc.getField("type").stringValue()))
             {
                 item = new MovieResultItem();
             }
@@ -274,9 +277,20 @@ public class SearchEngineService
         status.setQueryCount(status.getQueryCount() + 1);
         return result;
     }
+
+    private Map<String, DoubanResource> doubanMaps;
     
-    public DoubanResource loadDataFromDouban(String name) throws Exception{
-        DoubanResource dbResource = douban.getInfo(name,DoubanResourceType.MOVIE);
+    public DoubanResource loadDataFromDouban(String name) throws Exception
+    {
+        if(doubanMaps.containsKey(name))
+        {
+            return doubanMaps.get(name);
+        }
+        DoubanResource dbResource = douban.getInfo(name, DoubanResourceType.MOVIE);
+        if(dbResource != null)
+        {
+            doubanMaps.put(name, dbResource);
+        }
         return dbResource;
     }
 }
