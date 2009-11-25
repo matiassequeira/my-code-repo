@@ -1,6 +1,7 @@
 package org.kuokuo.server;
 
 import org.kuokuo.client.data.DoubanResource;
+import org.kuokuo.client.data.DoubanResourceType;
 import org.kuokuo.client.data.IndexStatus;
 import org.kuokuo.client.data.PagingUpdateItems;
 import org.kuokuo.client.data.QueryResult;
@@ -42,9 +43,9 @@ public class SearchServiceImpl extends RemoteServiceServlet implements SearchSer
         return getUpdateItems(0, 10);
     }
 
-    public DoubanResource getDoubanInfo(String name) throws Exception
+    public DoubanResource getDoubanInfo(String name, DoubanResourceType type, String cacheKey) throws Exception
     {
-        return SearchEngineService.getInstance().loadDataFromDouban(name);
+        return SearchEngineService.getInstance().loadDataFromDouban(name, type, cacheKey);
     }
 
     /**

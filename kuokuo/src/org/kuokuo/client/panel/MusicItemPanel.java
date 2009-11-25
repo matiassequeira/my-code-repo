@@ -21,16 +21,15 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * movie content build
  * 
  * @version Nov 23, 2009 11:05:12 PM
- * @author Dingmeng (xuedm79@gmail.com)
  */
-public class MovieItemPanel extends SearchResultItemPanel
+public class MusicItemPanel extends SearchResultItemPanel
 {
     private SimplePanel doubanImage;
 
     /**
      * @param item
      */
-    public MovieItemPanel(QueryResultItem item)
+    public MusicItemPanel(QueryResultItem item)
     {
         super(item);
     }
@@ -47,7 +46,7 @@ public class MovieItemPanel extends SearchResultItemPanel
         // panel.add(new
         // HTML("<a href=\""+item.doubanURL+"\"><img border=0 src=\""+item.imageURL+"\"></a>"));
         doubanImage = new SimplePanel();
-        doubanImage.setWidget(new HTML("<a href=\"#\"><img width=\"60px\" border=0 src=\"http://t.douban.com/pics/movie-default-small.gif\"></a>"));
+        doubanImage.setWidget(new HTML("<a href=\"#\"><img width=\"60px\" border=0 src=\"http://t.douban.com/pics/music-default-small.gif\"></a>"));
         panel.add(doubanImage);
 
         VerticalPanel vBox = new VerticalPanel();
@@ -77,7 +76,7 @@ public class MovieItemPanel extends SearchResultItemPanel
 
         // ajax load douban info
         SearchServiceAsync searchService = ServiceFactory.SERVICE_SEARCH;
-        searchService.getDoubanInfo(item.getName(), DoubanResourceType.MOVIE, item.getPath(), new AsyncCallback<DoubanResource>()
+        searchService.getDoubanInfo(item.getName(),DoubanResourceType.MUSIC, item.getPath(), new AsyncCallback<DoubanResource>()
         {
 
             public void onSuccess(DoubanResource result)
