@@ -1,4 +1,4 @@
-package org.kuokuo.server;
+package org.kuokuo.client.data;
 
 public enum DoubanResourceType
 {

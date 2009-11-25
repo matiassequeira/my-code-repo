@@ -55,6 +55,10 @@ public class SearchResultPanel extends VerticalPanel
             {
                 resultItem = new MovieItemPanel(item);
             }
+            else if(item.checkType(Search.TYPE_MUSIC))
+            {
+                resultItem = new MusicItemPanel(item);
+            }            
             else
             {
                 resultItem = new SearchResultItemPanel(item);

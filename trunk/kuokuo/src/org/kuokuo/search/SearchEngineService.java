@@ -6,10 +6,8 @@ package org.kuokuo.search;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import org.apache.lucene.analysis.Analyzer;
@@ -28,15 +26,16 @@ import org.apache.lucene.util.Version;
 import org.kuokuo.Configuration;
 import org.kuokuo.client.Search;
 import org.kuokuo.client.data.DoubanResource;
+import org.kuokuo.client.data.DoubanResourceType;
 import org.kuokuo.client.data.IndexStatus;
 import org.kuokuo.client.data.MovieResultItem;
+import org.kuokuo.client.data.MusicResultItem;
 import org.kuokuo.client.data.PagingUpdateItems;
 import org.kuokuo.client.data.QueryResult;
 import org.kuokuo.client.data.QueryResultItem;
 import org.kuokuo.resource.ResourceDef;
 import org.kuokuo.resource.ResourceReader;
 import org.kuokuo.server.CachedDoubanService;
-import org.kuokuo.server.DoubanResourceType;
 
 import com.chenlb.mmseg4j.analysis.MaxWordAnalyzer;
 
@@ -115,8 +114,7 @@ public class SearchEngineService
         status.setDocCount(0);
         writer = new IndexWriter(directory, analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED);
         updates = new QueryResultItem[100];
-        doubanMaps = new HashMap<String, DoubanResource>();
-        
+
         long start = System.currentTimeMillis();
         List<ResourceDef> resourceDefs = Configuration.getInstance().getResourceDefs();
         for (ResourceDef def : resourceDefs)
@@ -173,6 +171,10 @@ public class SearchEngineService
         if(Search.TYPE_MOVIE.equals(doc.getField("type").stringValue()))
         {
             item = new MovieResultItem();
+        }
+        else if(Search.TYPE_MUSIC.equals(doc.getField("type").stringValue())) 
+        {
+            item = new MusicResultItem();
         }
         else
         {
@@ -256,6 +258,10 @@ public class SearchEngineService
             {
                 item = new MovieResultItem();
             }
+            else if(Search.TYPE_MUSIC.equals(doc.getField("type").stringValue())) 
+            {
+                item = new MusicResultItem();
+            }            
             else
             {
                 item = new QueryResultItem();
@@ -278,19 +284,9 @@ public class SearchEngineService
         return result;
     }
 
-    private Map<String, DoubanResource> doubanMaps;
-    
-    public DoubanResource loadDataFromDouban(String name) throws Exception
+    public DoubanResource loadDataFromDouban(String name, DoubanResourceType type, String cacheKey) throws Exception
     {
-        if(doubanMaps.containsKey(name))
-        {
-            return doubanMaps.get(name);
-        }
-        DoubanResource dbResource = douban.getInfo(name, DoubanResourceType.MOVIE);
-        if(dbResource != null)
-        {
-            doubanMaps.put(name, dbResource);
-        }
+        DoubanResource dbResource = douban.getInfo(name, type, cacheKey);
         return dbResource;
     }
 }

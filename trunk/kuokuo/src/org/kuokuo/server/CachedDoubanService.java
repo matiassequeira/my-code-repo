@@ -1,12 +1,14 @@
 package org.kuokuo.server;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.logging.Logger;
 
 import org.kuokuo.client.data.DoubanResource;
+import org.kuokuo.client.data.DoubanResourceType;
 
 import com.google.gdata.client.douban.DoubanService;
 import com.google.gdata.data.douban.SubjectEntry;
@@ -18,7 +20,7 @@ public class CachedDoubanService
     
     private DoubanService dbService;
 
-    private Map<String, DoubanResource> cache4Movies;
+    private Map<String, DoubanResource> cache;
 
     public CachedDoubanService()
     {
@@ -28,27 +30,44 @@ public class CachedDoubanService
         // the simplest implementation of in-memory cache
         // More advanced cache systems such as JCS, ehache, oscache, will be
         // considered using when necessary
-        cache4Movies = Collections.synchronizedMap(new WeakHashMap<String, DoubanResource>());
+        cache = Collections.synchronizedMap(new HashMap<String, DoubanResource>());
     }
 
-    public DoubanResource getInfo(String query, DoubanResourceType type) throws Exception
+    /**
+     * 
+     * @param query usually the file name
+     * @param type
+     * @param cacheKey the key for the map-based cache, usually the full path
+     * @return
+     * @throws Exception
+     */
+    public DoubanResource getInfo(String query, DoubanResourceType type, String cacheKey) throws Exception
     {
+        DoubanResource doubanResource = cache.get(cacheKey);
+        if (doubanResource != null)
+        {
+            logger.info("hit cache entry ["+cacheKey+"] with douban id: "+doubanResource.selfURL);
+            return doubanResource;
+        }
+        
         SubjectFeed feed = null;
         switch (type)
         {
         case MOVIE:
-            DoubanResource doubanResource = cache4Movies.get(query);
-            if (doubanResource != null)
-            {
-                logger.info("hit cache entry ["+query+"] with douban id: "+doubanResource.selfURL);
-                return doubanResource;
-            }
             feed = dbService.findMovie(query, null, 1, 1);
             break;
+        case MUSIC:
+            feed = dbService.findMusic(query, null, 1, 1);
+            break;
+        case BOOK:
+            feed = dbService.findBook(query, null, 1, 1);
+            break;             
         }
+        //feed never null
         List<SubjectEntry> list = feed.getEntries();
         if (list.size() == 0)
         {
+            logger.info("no entry found in douban for ["+cacheKey+"]");
             return null;
         }
         SubjectEntry entry = list.get(0);
@@ -57,8 +76,8 @@ public class CachedDoubanService
         switch (type)
         {
         case MOVIE:
-            logger.info("caching entry ["+query+"] with douban id: "+rv.selfURL);
-            cache4Movies.put(query, rv);
+            logger.info("caching entry ["+cacheKey+"] with douban id: "+rv.selfURL);
+            cache.put(cacheKey, rv);
             break;
         }
         return rv;
