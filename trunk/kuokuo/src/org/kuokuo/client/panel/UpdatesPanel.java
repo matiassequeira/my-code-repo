@@ -43,7 +43,7 @@ public class UpdatesPanel extends VerticalPanel
         this.setCellHorizontalAlignment(footerPanel, ALIGN_RIGHT);
 
         SearchServiceAsync searchService = ServiceFactory.SERVICE_SEARCH;
-        searchService.getUpdateItems(0, 10, new AsyncCallback<PagingUpdateItems>()
+        searchService.getUpdateItems(0, 50, new AsyncCallback<PagingUpdateItems>()
         {
             public void onSuccess(PagingUpdateItems items)
             {
