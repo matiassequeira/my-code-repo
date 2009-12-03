@@ -84,7 +84,7 @@ public class MovieItemPanel extends SearchResultItemPanel
             {
                 if(result != null)
                 {
-                    doubanImage.setWidget(new HTML("<a href=\"" + result.selfURL + "\"><img width=\"60px\" border=0 src=\"" + result.imageURL + "\"></a>"));
+                    doubanImage.setWidget(new HTML("<a href=\"" + result.selfURL + "\" target=\"blank\"><img width=\"60px\" border=0 src=\"" + result.imageURL + "\"></a>"));
                 }
             }
 
