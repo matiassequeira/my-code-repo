@@ -4,6 +4,9 @@
 package org.kuokuo;
 
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.List;
 import java.util.Vector;
 
@@ -78,9 +81,14 @@ public class Configuration
     {
         for (Node node = el.getFirstChild(); node != null; node = node.getNextSibling())
         {
-            if ("interval".equals(el.getNodeName()) && node instanceof Element)
+            if ("interval".equals(node.getNodeName()) && node instanceof Element)
             {
                 indexInterval = Integer.parseInt(((Element) node).getTextContent());
+            }
+            if ("dict-path".equals(node.getNodeName()) && node instanceof Element)
+            {
+                String path = ((Element) node).getTextContent();
+                dictPath = getPathUnderWebInfo(path);
             }
         }
     }
@@ -115,6 +123,32 @@ public class Configuration
         return def;
     }
 
+    private URI webAbsolutePath = null;
+    
+    public String getWebInfoPath()
+    {
+        return getPathUnderWebInfo(".");
+    }
+
+    public String getPathUnderWebInfo(String relativePath)
+    {
+        if (webAbsolutePath == null)
+        {
+            try
+            {
+                URL url = this.getClass().getResource(CONFIG_FILE);
+                URI uri = url.toURI();
+                webAbsolutePath = uri.resolve("..");
+            }
+            catch (URISyntaxException e)
+            {
+                throw new RuntimeException(e);
+            }
+        }
+        URI newPath = webAbsolutePath.resolve(relativePath);
+        return newPath.getPath();
+    }
+    
     /**
      * index interval, unit is minutes and 3 hours is default;
      */
@@ -123,6 +157,16 @@ public class Configuration
     public int getIndexInterval()
     {
         return indexInterval;
+    }
+
+    /**
+     * dict path for index engine
+     */
+    private String dictPath = null;
+    
+    public String getDictPath()
+    {
+        return dictPath;
     }
 
     private String version = "";

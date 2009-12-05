@@ -8,5 +8,6 @@
 	</resources>
 	<index>
 		<interval>3</interval>
+		<dict-path>dic/</dict-path>
 	</index>
 </configuration>
