@@ -14,45 +14,11 @@
 		<servlet-name>searchServlet</servlet-name>
 		<servlet-class>org.kuokuo.server.SearchServiceImpl</servlet-class>
 	</servlet>
-
-
-
-	<servlet>
-		<servlet-name>H2Console</servlet-name>
-		<servlet-class>org.h2.server.web.WebServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-
-
 	<servlet-mapping>
 		<servlet-name>searchServlet</servlet-name>
 		<url-pattern>/search/search</url-pattern>
 	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>H2Console</servlet-name>
-		<url-pattern>/console/*</url-pattern>
-	</servlet-mapping>
-
-
-
-	<context-param>
-		<param-name>db.url</param-name>
-		<param-value>jdbc:h2:Q:/app/db/h2/~/test</param-value>
-	</context-param>
-	<context-param>
-		<param-name>db.user</param-name>
-		<param-value>sa</param-value>
-	</context-param>
-	<context-param>
-		<param-name>db.password</param-name>
-		<param-value>sa</param-value>
-	</context-param>
-	<context-param>
-		<param-name>db.tcpServer</param-name>
-		<param-value>-tcpAllowOthers</param-value>
-	</context-param>
 	<listener>
-		<listener-class>org.h2.server.web.DbStarter</listener-class>
+		<listener-class>org.kuokuo.KuokuoContextListener</listener-class>
 	</listener>
 </web-app>
