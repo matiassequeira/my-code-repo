@@ -67,15 +67,15 @@ public class UpdatesPanel extends VerticalPanel
             Composite resultItem = null;
             if(item.checkType(Search.TYPE_MOVIE))
             {
-                resultItem = new MovieItemPanel(item);
+                //resultItem = new MovieItemPanel(item);
             }
             else if(item.checkType(Search.TYPE_MUSIC))
             {
-                resultItem = new MusicItemPanel(item);
+                //resultItem = new MusicItemPanel(item);
             }            
             else
             {
-                resultItem = new SearchResultItemPanel(item);
+                //resultItem = new SearchResultItemPanel(item);
             }
             contentPanel.add(resultItem);
         }

@@ -3,7 +3,7 @@
  */
 package org.kuokuo.client.panel;
 
-import org.kuokuo.client.data.QueryResultItem;
+import org.kuokuo.client.data.KuokuoItem;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
@@ -15,12 +15,12 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class SearchResultItemPanel extends Composite
 {
-    public SearchResultItemPanel(QueryResultItem item)
+    public SearchResultItemPanel(KuokuoItem item)
     {
         buildContent(item);
     }
     
-    protected void buildContent(QueryResultItem item)
+    protected void buildContent(KuokuoItem item)
     {
         VerticalPanel panel = new VerticalPanel();
         initWidget(panel);
@@ -36,7 +36,6 @@ public class SearchResultItemPanel extends Composite
         HorizontalPanel secondRow = new HorizontalPanel();
         secondRow.add(new HTML("<a href=\"" + item.getPath() +  "\" target=\"blank\">" + trimName(item.getPath()) +  "</a>"));
         secondRow.add(new HTML("&nbsp;"));
-        secondRow.add(new HTML(item.getLastModified()));
         panel.add(secondRow);
     }
     

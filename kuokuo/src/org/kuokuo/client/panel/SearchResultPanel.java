@@ -6,8 +6,8 @@ package org.kuokuo.client.panel;
 import java.util.List;
 
 import org.kuokuo.client.Search;
+import org.kuokuo.client.data.KuokuoItem;
 import org.kuokuo.client.data.QueryResult;
-import org.kuokuo.client.data.QueryResultItem;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
@@ -46,19 +46,19 @@ public class SearchResultPanel extends VerticalPanel
 
     public void bindData(QueryResult result)
     {
-        List<QueryResultItem> resultItems = result.getItems();
+        List<KuokuoItem> resultItems = result.getItems();
         resultRow.clear();
-        for (QueryResultItem item : resultItems)
+        for (KuokuoItem item : resultItems)
         {
             Composite resultItem = null;
-            if(item.checkType(Search.TYPE_MOVIE))
+            if(Search.TYPE_MOVIE.equals(item.getType()))
             {
                 resultItem = new MovieItemPanel(item);
             }
-            else if(item.checkType(Search.TYPE_MUSIC))
+            else if(Search.TYPE_MUSIC.equals(item.getType()))
             {
                 resultItem = new MusicItemPanel(item);
-            }            
+            }
             else
             {
                 resultItem = new SearchResultItemPanel(item);

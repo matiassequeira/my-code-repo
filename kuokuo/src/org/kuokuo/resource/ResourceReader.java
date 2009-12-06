@@ -4,15 +4,10 @@
 package org.kuokuo.resource;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Logger;
-
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
 
 /**
  * Resource reader
@@ -92,40 +87,14 @@ public class ResourceReader
         return false;
     }
 
-    public Iterator<Document> iterator()
+    public Iterator<File> iterator()
     {
         return new Itr();
     }
-
-    private Document generateDocument(File file)
-    {
-        Document doc = new Document();
-        String name = file.getName();
-        String suffix = "";
-        if(!file.isDirectory())
-        {
-            int pos = name.lastIndexOf(".");
-            if(pos > 0)
-            {
-                suffix = name.substring(pos + 1);
-            }
-        }
-        
-        doc.add(new Field("name", name, Field.Store.YES, Field.Index.ANALYZED));
-        doc.add(new Field("type", type, Field.Store.YES, Field.Index.NO));
-        doc.add(new Field("suffix", suffix, Field.Store.YES, Field.Index.NO));
-        doc.add(new Field("path", file.getAbsolutePath(), Field.Store.YES, Field.Index.NO));
-        doc.add(new Field("lastModified", sdf.format(new Date(file.lastModified())), Field.Store.YES, Field.Index.NO));
-        doc.add(new Field("timestamp", Long.toString(file.lastModified()), Field.Store.YES, Field.Index.NO));
-        doc.add(new Field("isFolder", Boolean.toString(file.isDirectory()), Field.Store.YES, Field.Index.NO));
-        return doc;
-    }
-
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/M/d H:mm");
     
     private List<File> files;
 
-    private class Itr implements Iterator<Document>
+    private class Itr implements Iterator<File>
     {
         int cursor = 0;
 
@@ -140,13 +109,13 @@ public class ResourceReader
         /**
          * @see java.util.Iterator#next()
          */
-        public Document next()
+        public File next()
         {
             File file = files.get(cursor);
             cursor++;
-            return generateDocument(file);
+            return file;
         }
-
+        
         /**
          * @see java.util.Iterator#remove()
          * @deprecated unsupport

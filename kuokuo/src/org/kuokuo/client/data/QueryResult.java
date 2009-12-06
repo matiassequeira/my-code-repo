@@ -15,7 +15,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  */
 public class QueryResult implements IsSerializable
 {
-    private List<QueryResultItem> items;
+    private List<KuokuoItem> items;
 
     private float time;
 
@@ -26,7 +26,7 @@ public class QueryResult implements IsSerializable
     /**
      * @return Returns the items.
      */
-    public List<QueryResultItem> getItems()
+    public List<KuokuoItem> getItems()
     {
         return items;
     }
@@ -35,7 +35,7 @@ public class QueryResult implements IsSerializable
      * @param items
      *            The items to set.
      */
-    public void setItems(List<QueryResultItem> items)
+    public void setItems(List<KuokuoItem> items)
     {
         this.items = items;
     }
