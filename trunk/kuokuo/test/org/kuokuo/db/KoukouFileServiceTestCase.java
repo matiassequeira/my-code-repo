@@ -5,6 +5,8 @@ package org.kuokuo.db;
 
 import java.util.List;
 
+import org.kuokuo.server.dao.HibernateUtil;
+
 import junit.framework.TestCase;
 
 /**

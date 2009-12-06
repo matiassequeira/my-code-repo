@@ -6,14 +6,13 @@ package org.kuokuo.client.panel;
 import org.kuokuo.client.ServiceFactory;
 import org.kuokuo.client.data.DoubanResource;
 import org.kuokuo.client.data.DoubanResourceType;
-import org.kuokuo.client.data.QueryResultItem;
+import org.kuokuo.client.data.KuokuoItem;
 import org.kuokuo.client.service.SearchServiceAsync;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -29,7 +28,7 @@ public class MusicItemPanel extends SearchResultItemPanel
     /**
      * @param item
      */
-    public MusicItemPanel(QueryResultItem item)
+    public MusicItemPanel(KuokuoItem item)
     {
         super(item);
     }
@@ -38,7 +37,7 @@ public class MusicItemPanel extends SearchResultItemPanel
      * @see org.kuokuo.client.panel.SearchResultItemPanel#buildContent(org.kuokuo.client.data.QueryResultItem)
      */
     @Override
-    protected void buildContent(QueryResultItem item)
+    protected void buildContent(KuokuoItem item)
     {
         HorizontalPanel panel = new HorizontalPanel();
         initWidget(panel);
@@ -64,7 +63,7 @@ public class MusicItemPanel extends SearchResultItemPanel
         }
 
         {
-            vBox.add(new Label(item.getLastModified()));
+            //vBox.add(new Label(item.getLastModified()));
         }
 
         {

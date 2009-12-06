@@ -22,6 +22,7 @@ import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
 import org.kuokuo.Constants;
+import org.kuokuo.server.dao.HibernateUtil;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
 

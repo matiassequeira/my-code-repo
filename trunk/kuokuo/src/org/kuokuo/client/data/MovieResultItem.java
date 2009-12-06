@@ -3,7 +3,6 @@
  */
 package org.kuokuo.client.data;
 
-import org.kuokuo.client.Search;
 
 /**
  * movie query result item
@@ -11,16 +10,8 @@ import org.kuokuo.client.Search;
  * @version Nov 23, 2009 11:16:30 PM
  * @author Dingmeng (xuedm79@gmail.com)
  */
-public class MovieResultItem extends QueryResultItem
+public class MovieResultItem extends KuokuoItem
 {
-
-    /**
-     * @see org.kuokuo.client.data.QueryResultItem#checkType(java.lang.String)
-     */
-    @Override
-    public boolean checkType(String type)
-    {
-        return Search.TYPE_MOVIE.equals(type);
-    }
-
+    private static final long serialVersionUID = -2637730304977853757L;
+    
 }
