@@ -17,6 +17,7 @@ import org.apache.lucene.util.Version;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
@@ -69,6 +70,7 @@ public class KuokuoItemDao extends AbstractDao
             item.setType(def.getType());
             item.setRootPath(def.getRootPath());
             item.setPath(file.getAbsolutePath());
+            item.setFolderPath(file.getParent());
             item.setLastModified(new Date(file.lastModified()));
             item.setFolder(file.isDirectory());
             if (!item.isFolder())
@@ -84,6 +86,42 @@ public class KuokuoItemDao extends AbstractDao
             session.saveOrUpdate(item);
             session.getTransaction().commit();
             return true;
+        }
+        finally
+        {
+            releaseSession(session);
+        }
+    }
+    
+    /**
+     * get count of all items
+     * @return
+     */
+    public int getAllItemsCount()
+    {
+        Session session = getSession();
+        try
+        {
+            Criteria crit = session.createCriteria(KuokuoItem.class);
+            return crit.list().size();
+        }
+        finally
+        {
+            releaseSession(session);
+        }
+    }
+    
+    @SuppressWarnings("unchecked")
+    public List<KuokuoItem> getKuokuoItemOrderByModified(int from, int pageSize)
+    {
+        Session session = getSession();
+        try
+        {
+            Criteria crit = session.createCriteria(KuokuoItem.class);
+            crit = crit.addOrder(Order.desc("lastModified"));
+            crit.setFirstResult(from);
+            crit.setMaxResults(pageSize);
+            return crit.list();
         }
         finally
         {

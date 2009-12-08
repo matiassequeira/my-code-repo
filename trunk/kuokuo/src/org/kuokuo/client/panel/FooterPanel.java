@@ -7,10 +7,8 @@ import org.kuokuo.client.ServiceFactory;
 import org.kuokuo.client.data.IndexStatus;
 import org.kuokuo.client.service.SearchServiceAsync;
 
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
@@ -26,20 +24,15 @@ public class FooterPanel extends VerticalPanel
     public FooterPanel()
     {
         this.setHorizontalAlignment(ALIGN_CENTER);
-        DOM.setElementAttribute(this.getElement(), "id", "page-footer");
-        HorizontalPanel firstRow = new HorizontalPanel();
-        firstRow.setSpacing(5);
+        this.setSpacing(5);
         status = new HTML();
-        firstRow.add(status);
+        status.setStyleName("page-footer");
         refresh();
-        this.add(firstRow);
+        this.add(status);
 
-        HorizontalPanel secondRow = new HorizontalPanel();
-        secondRow.setSpacing(5);
-        secondRow.add(new HTML("Kuokuo 1.2"));
-        secondRow.add(new HTML("<a href='mailto:xuedm79@gmail.com'>报告错误</a>"));
-        secondRow.add(new HTML("Power by GWT, Lucene & MMSeg4J"));
-        this.add(secondRow);
+        HTML html = new HTML("Kuokuo 1.2 <a href='mailto:xuedm79@gmail.com'>报告错误</a> Power by GWT, Lucene & MMSeg4J");
+        html.setStyleName("page-footer");
+        this.add(html);
     }
 
     public void refresh()

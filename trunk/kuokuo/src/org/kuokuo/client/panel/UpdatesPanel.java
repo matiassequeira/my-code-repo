@@ -7,14 +7,14 @@ import java.util.List;
 
 import org.kuokuo.client.Search;
 import org.kuokuo.client.ServiceFactory;
-import org.kuokuo.client.data.PagingUpdateItems;
-import org.kuokuo.client.data.QueryResultItem;
+import org.kuokuo.client.data.KuokuoItem;
+import org.kuokuo.client.data.PaginationItem;
 import org.kuokuo.client.service.SearchServiceAsync;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
@@ -29,23 +29,49 @@ public class UpdatesPanel extends VerticalPanel
 
     protected HorizontalPanel footerPanel;
 
+    protected PaginationPanel pagingPanel1;
+    
+    protected PaginationPanel pagingPanel2;
+    
     public UpdatesPanel()
     {
-        this.setSpacing(10);
-        this.add(new HTML("<b><i>最近更新</i></b>"));
-
+        pagingPanel1 = new PaginationPanel()
+        {
+            public void page(int start, int pageSize)
+            {
+                queryData(start, pageSize);
+            }
+        };
+        pagingPanel2 = new PaginationPanel()
+        {
+            public void page(int start, int pageSize)
+            {
+                queryData(start, pageSize);
+            }
+        };
+        
+        TabPanel tabPanel = new TabPanel();
         contentPanel = new VerticalPanel();
-        this.add(contentPanel);
+        contentPanel.setSpacing(5);
+        tabPanel.add(contentPanel, "最新推荐");
+        tabPanel.selectTab(0);
+        tabPanel.setWidth("100%");
+        this.add(tabPanel);
+        this.setCellWidth(tabPanel, "80%");
         this.setCellHorizontalAlignment(contentPanel, ALIGN_LEFT);
 
         footerPanel = new HorizontalPanel();
         this.add(footerPanel);
         this.setCellHorizontalAlignment(footerPanel, ALIGN_RIGHT);
+        queryData(0, 10);
+    }
 
+    private void queryData(int start, int pageSize)
+    {
         SearchServiceAsync searchService = ServiceFactory.SERVICE_SEARCH;
-        searchService.getUpdateItems(0, 50, new AsyncCallback<PagingUpdateItems>()
+        searchService.getKuokuoItemOrderByModified(start, pageSize, new AsyncCallback<PaginationItem<KuokuoItem>>()
         {
-            public void onSuccess(PagingUpdateItems items)
+            public void onSuccess(PaginationItem<KuokuoItem> items)
             {
                 bindData(items);
             }
@@ -56,30 +82,34 @@ public class UpdatesPanel extends VerticalPanel
             }
         });
     }
-
-    protected void bindData(PagingUpdateItems items)
+    
+    protected void bindData(PaginationItem<KuokuoItem> items)
     {
+        int start = items.getStart();
+        int total = items.getTotal();
         contentPanel.clear();
-        List<QueryResultItem> list = items.getItems();
+        pagingPanel1.bindData(start, total);
+        contentPanel.add(pagingPanel1);
+        List<KuokuoItem> list = items.getList();
         
-        for(QueryResultItem item : list)
+        for(KuokuoItem item : list)
         {
             Composite resultItem = null;
-            if(item.checkType(Search.TYPE_MOVIE))
+            if(Search.TYPE_MOVIE.equals(item.getType()))
             {
-                //resultItem = new MovieItemPanel(item);
+                resultItem = new MovieItemPanel(item);
             }
-            else if(item.checkType(Search.TYPE_MUSIC))
+            else if(Search.TYPE_MUSIC.equals(item.getType()))
             {
-                //resultItem = new MusicItemPanel(item);
-            }            
+                resultItem = new MusicItemPanel(item);
+            }
             else
             {
-                //resultItem = new SearchResultItemPanel(item);
+                resultItem = new SearchResultItemPanel(item);
             }
             contentPanel.add(resultItem);
         }
-        
-        
+        pagingPanel2.bindData(start, total);
+        contentPanel.add(pagingPanel2);
     }
 }
