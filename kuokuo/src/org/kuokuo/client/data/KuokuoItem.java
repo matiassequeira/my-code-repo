@@ -36,6 +36,9 @@ public class KuokuoItem extends PersistentObject
 
     @Column(name = "PATH", nullable = false, length = 1000)
     private String path;
+    
+    @Column(name = "FOLDER_PATH", nullable = false, length = 1000)
+    private String folderPath;
 
     @Column(name = "NAME", nullable = false, length = 256)
     @Field(index = Index.TOKENIZED, store = Store.YES)
@@ -97,6 +100,22 @@ public class KuokuoItem extends PersistentObject
     public void setPath(String path)
     {
         this.path = path;
+    }
+
+    /**
+     * @return the folderPath
+     */
+    public String getFolderPath()
+    {
+        return folderPath;
+    }
+
+    /**
+     * @param folderPath the folderPath to set
+     */
+    public void setFolderPath(String folderPath)
+    {
+        this.folderPath = folderPath;
     }
 
     /**

@@ -4,11 +4,6 @@
 	font-size: 16pt;
 }
 
-/** Most GWT widgets already have a style name defined */
-.gwt-DialogBox {
-	width: 400px;
-}
-
 .dialogVPanel {
 	margin: 5px;
 }
@@ -22,6 +17,32 @@
 	margin: 15px 6px 6px;
 }
 
-#page-footer
+.page-footer
 {
-	font-size: 10px;
+	font-size: 12px;
+}
+
+.paging-enable
+{
+	color: blue; cursor: hand; text-decoration: underline; font-size: 14px;
+}
+
+.paging-disable
+{
+	color: gray; font-size: 14px;
+}
+
+.paging-current
+{
+	color: black; font-weight: bold; font-size: 14px;
+}
+
+.paging-text
+{
+	color: black; font-size: 14px;
+}
+
+.item-gray
+{
+	color: gray; font-size: 10px;
+}

@@ -1,12 +1,17 @@
 package org.kuokuo.server;
 
+import java.util.List;
+import java.util.Vector;
+
 import org.kuokuo.client.data.DoubanResource;
 import org.kuokuo.client.data.DoubanResourceType;
 import org.kuokuo.client.data.IndexStatus;
-import org.kuokuo.client.data.PagingUpdateItems;
+import org.kuokuo.client.data.KuokuoItem;
+import org.kuokuo.client.data.PaginationItem;
 import org.kuokuo.client.data.QueryResult;
 import org.kuokuo.client.service.SearchService;
 import org.kuokuo.search.SearchEngineService;
+import org.kuokuo.server.dao.KuokuoItemDao;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -38,11 +43,6 @@ public class SearchServiceImpl extends RemoteServiceServlet implements SearchSer
         return SearchEngineService.getInstance().getIndexStatus();
     }
 
-    public PagingUpdateItems getUpdateItems()
-    {
-        return getUpdateItems(0, 10);
-    }
-
     public DoubanResource getDoubanInfo(String name, DoubanResourceType type, String cacheKey) throws Exception
     {
         return SearchEngineService.getInstance().loadDataFromDouban(name, type, cacheKey);
@@ -51,16 +51,29 @@ public class SearchServiceImpl extends RemoteServiceServlet implements SearchSer
     /**
      * @see org.kuokuo.client.service.SearchService#getUpdateItems(int, int)
      */
-    public PagingUpdateItems getUpdateItems(int from, int len)
+    public PaginationItem<KuokuoItem> getKuokuoItemOrderByModified(int start, int pageSize)
     {
         try
         {
-            return SearchEngineService.getInstance().getUpdateItems(from, len);
+            KuokuoItemDao dao = new KuokuoItemDao();
+
+            List<KuokuoItem> list = dao.getKuokuoItemOrderByModified(start, pageSize);
+            List<KuokuoItem> ret = new Vector<KuokuoItem>(list.size());
+            for (KuokuoItem item : list)
+            {
+                ret.add(item);
+            }
+            int total = dao.getAllItemsCount();
+            PaginationItem<KuokuoItem> rv = new PaginationItem<KuokuoItem>();
+            rv.setList(ret);
+            rv.setStart(start);
+            rv.setPageSize(pageSize);
+            rv.setTotal(total);
+            return rv;
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return new PagingUpdateItems();
     }
 }
