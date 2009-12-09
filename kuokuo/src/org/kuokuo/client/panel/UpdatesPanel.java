@@ -53,7 +53,7 @@ public class UpdatesPanel extends VerticalPanel
         TabPanel tabPanel = new TabPanel();
         contentPanel = new VerticalPanel();
         contentPanel.setSpacing(5);
-        tabPanel.add(contentPanel, "最新推荐");
+        tabPanel.add(contentPanel, "最近更新");
         tabPanel.selectTab(0);
         tabPanel.setWidth("100%");
         this.add(tabPanel);
