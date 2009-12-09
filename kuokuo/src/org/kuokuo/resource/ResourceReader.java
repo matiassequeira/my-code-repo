@@ -41,6 +41,11 @@ public class ResourceReader
     
     private void loadFiles(File path)
     {
+        if(path == null || !path.exists())
+        {
+            return;
+        }
+        
         File[] files = path.listFiles();
         if(files==null){
         	throw new IllegalArgumentException("Fail to open folder "+path);
