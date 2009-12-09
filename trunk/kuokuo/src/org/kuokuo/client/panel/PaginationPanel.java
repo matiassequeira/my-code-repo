@@ -7,9 +7,9 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 
@@ -71,7 +71,7 @@ public abstract class PaginationPanel extends HorizontalPanel
 
         if(currentPage > 0)
         {
-            Hyperlink lnkFirst = new PagingHyperlink("<<");
+            Anchor lnkFirst = new PagingAnchor("<<");
             lnkFirst.addClickHandler(new PageClickHandler(0, this));
             this.add(lnkFirst);
         }
@@ -83,7 +83,7 @@ public abstract class PaginationPanel extends HorizontalPanel
 
         if(currentPage >= 10)
         {
-            Hyperlink lnkPrevious = new PagingHyperlink("<");
+            Anchor lnkPrevious = new PagingAnchor("<");
             //if current page is 15, clicking on the < link goes to the previous 1-10 pages, stop by the 1th page
             lnkPrevious.addClickHandler(new PageClickHandler((currentPage - 10 - currentPage%10 + 1) * pageSize, this));
             this.add(lnkPrevious);
@@ -99,7 +99,7 @@ public abstract class PaginationPanel extends HorizontalPanel
         {
             if(i != currentPage && i <= totalPage)
             {
-                Hyperlink link = new PagingHyperlink(Integer.toString(i + 1));
+                Anchor link = new PagingAnchor(Integer.toString(i + 1));
                 link.addClickHandler(new PageClickHandler(i * pageSize, this));
                 this.add(link);
             }
@@ -116,7 +116,7 @@ public abstract class PaginationPanel extends HorizontalPanel
         
         if(currentPage + 10 < totalPage)
         {
-            Hyperlink lnkNext = new PagingHyperlink(">");
+            Anchor lnkNext = new PagingAnchor(">");
             //if current page is 5, clicking on the > link goes to the next 11-20 pages, stop by the 11th page
             lnkNext.addClickHandler(new PageClickHandler((currentPage + 10 - currentPage%10 + 1) * pageSize, this));
             this.add(lnkNext);
@@ -129,7 +129,7 @@ public abstract class PaginationPanel extends HorizontalPanel
 
         if(currentPage < totalPage)
         {
-            Hyperlink lnkLast = new PagingHyperlink(">>");
+            Anchor lnkLast = new PagingAnchor(">>");
             lnkLast.addClickHandler(new PageClickHandler(totalPage * pageSize, this));
             this.add(lnkLast);
         }
@@ -166,9 +166,9 @@ public abstract class PaginationPanel extends HorizontalPanel
         }
     }
     
-    private class PagingHyperlink extends Hyperlink
+    private class PagingAnchor extends Anchor
     {
-        public PagingHyperlink(String text)
+        public PagingAnchor(String text)
         {
             this.setText(text);
             this.setStyleName("paging-enable");
