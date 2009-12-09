@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.WeakHashMap;
 import java.util.logging.Logger;
 
 import org.kuokuo.client.data.DoubanResource;
@@ -33,6 +32,8 @@ public class CachedDoubanService
         cache = Collections.synchronizedMap(new HashMap<String, DoubanResource>());
     }
 
+    private static long lastQuery = 0;
+    
     /**
      * 
      * @param query usually the file name
@@ -50,6 +51,15 @@ public class CachedDoubanService
             return doubanResource;
         }
         
+        //block query within 3 seconds.
+        if(System.currentTimeMillis() - lastQuery < 3000)
+        {
+            return null;
+        }
+
+        lastQuery = System.currentTimeMillis();
+        
+
         SubjectFeed feed = null;
         switch (type)
         {
@@ -73,13 +83,8 @@ public class CachedDoubanService
         SubjectEntry entry = list.get(0);
 
         DoubanResource rv = DoubanResourceFactory.create(entry);
-        switch (type)
-        {
-        case MOVIE:
-            logger.info("caching entry ["+cacheKey+"] with douban id: "+rv.selfURL);
-            cache.put(cacheKey, rv);
-            break;
-        }
+        logger.info("caching entry ["+cacheKey+"] with douban id: "+rv.selfURL);
+        cache.put(cacheKey, rv);
         return rv;
     }
 

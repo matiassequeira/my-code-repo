@@ -81,10 +81,10 @@ public abstract class PaginationPanel extends HorizontalPanel
             this.add(lnkFirst);
         }
 
-        if(currentPage > 0)
+        if(currentPage >= 10)
         {
             Hyperlink lnkPrevious = new PagingHyperlink("<");
-            lnkPrevious.addClickHandler(new PageClickHandler((currentPage - 1) * pageSize, this));
+            lnkPrevious.addClickHandler(new PageClickHandler((currentPage - 10) * pageSize, this));
             this.add(lnkPrevious);
         }
         else
@@ -93,7 +93,7 @@ public abstract class PaginationPanel extends HorizontalPanel
             this.add(lnkPrevious);
         }
 
-        int basePage = (int) (Math.ceil(currentPage / 10));
+        int basePage = (int) (Math.ceil(currentPage / 10)) * 10;
         for (int i = basePage; i < basePage + 10; i++)
         {
             if(i != currentPage && i <= totalPage)
@@ -113,10 +113,10 @@ public abstract class PaginationPanel extends HorizontalPanel
             }
         }
         
-        if(currentPage < totalPage)
+        if(currentPage + 10 < totalPage)
         {
             Hyperlink lnkNext = new PagingHyperlink(">");
-            lnkNext.addClickHandler(new PageClickHandler((currentPage + 1) * pageSize, this));
+            lnkNext.addClickHandler(new PageClickHandler((currentPage + 10) * pageSize, this));
             this.add(lnkNext);
         }
         else
