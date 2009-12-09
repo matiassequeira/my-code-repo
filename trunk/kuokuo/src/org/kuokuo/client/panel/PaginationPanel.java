@@ -84,7 +84,8 @@ public abstract class PaginationPanel extends HorizontalPanel
         if(currentPage >= 10)
         {
             Hyperlink lnkPrevious = new PagingHyperlink("<");
-            lnkPrevious.addClickHandler(new PageClickHandler((currentPage - 10) * pageSize, this));
+            //if current page is 15, clicking on the < link goes to the previous 1-10 pages, stop by the 1th page
+            lnkPrevious.addClickHandler(new PageClickHandler((currentPage - 10 - currentPage%10 + 1) * pageSize, this));
             this.add(lnkPrevious);
         }
         else
@@ -116,7 +117,8 @@ public abstract class PaginationPanel extends HorizontalPanel
         if(currentPage + 10 < totalPage)
         {
             Hyperlink lnkNext = new PagingHyperlink(">");
-            lnkNext.addClickHandler(new PageClickHandler((currentPage + 10) * pageSize, this));
+            //if current page is 5, clicking on the > link goes to the next 11-20 pages, stop by the 11th page
+            lnkNext.addClickHandler(new PageClickHandler((currentPage + 10 - currentPage%10 + 1) * pageSize, this));
             this.add(lnkNext);
         }
         else
