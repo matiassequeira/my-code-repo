@@ -11,6 +11,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.hibernate.Session;
+import org.kuokuo.search.SearchEngineService;
 import org.kuokuo.server.dao.HibernateUtil;
 
 /**
@@ -58,6 +59,9 @@ public class KuokuoContextListener implements ServletContextListener
             logger.severe("database isn't connected");
         }
         HibernateUtil.closeSession(session);
+        
+        //start search engine
+        SearchEngineService.getInstance().start();
     }
 
     /*
