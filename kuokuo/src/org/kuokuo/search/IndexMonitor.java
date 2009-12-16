@@ -23,20 +23,21 @@ public class IndexMonitor extends Thread
         {
             try
             {
+                SearchEngineService.getInstance().reindex();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            
+            try
+            {
                 long interval = Configuration.getInstance().getIndexInterval() * 60 * 1000;
                 sleep(interval);
             }
             catch (InterruptedException e)
             {
                 e.printStackTrace();
-            }
-            try
-            {
-                SearchEngineService.getInstance().reindex();
-            }
-            catch (Exception e1)
-            {
-                e1.printStackTrace();
             }
         }
     }

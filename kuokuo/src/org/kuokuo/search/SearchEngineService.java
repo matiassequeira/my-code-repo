@@ -49,7 +49,7 @@ public class SearchEngineService
         return instance;
     }
 
-    protected IndexMonitor monitor = new IndexMonitor();
+    protected IndexMonitor monitor;
 
     private SearchEngineService()
     {
@@ -60,9 +60,7 @@ public class SearchEngineService
             status = new IndexStatus();
             status.setStartDate(new SimpleDateFormat("MMM d").format(new Date()));
 
-            reindex();
-
-            monitor.start();
+            monitor = new IndexMonitor();
             
             douban=new CachedDoubanService();
         }
@@ -72,6 +70,11 @@ public class SearchEngineService
         }
     }
 
+    public synchronized void start()
+    {
+        monitor.start();
+    }
+    
     public synchronized void reindex() throws Exception
     {
         status.setDocCount(0);
