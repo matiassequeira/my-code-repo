@@ -7,6 +7,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -27,9 +29,20 @@ import com.chenlb.mmseg4j.analysis.MaxWordAnalyzer;
 @Table(name = "KUOKUO_ITEM")
 @Indexed
 @Analyzer(impl = MaxWordAnalyzer.class)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class KuokuoItem extends PersistentObject
 {
     private static final long serialVersionUID = 1485781894877463936L;
+
+    public static final String TYPE_MOVIE = "movie";
+
+    public static final String TYPE_GAME = "game";
+
+    public static final String TYPE_MUSIC = "music";
+
+    public static final String TYPE_BOOK = "book";
+
+    public static final String TYPE_OTHER = "other";
 
     @Column(name = "TYPE", nullable = false, length = 50)
     private String type;
@@ -56,8 +69,8 @@ public class KuokuoItem extends PersistentObject
     @Column(name = "ROOT_PATH", length = 50)
     private String rootPath;
 
-    @Column(name = "PERSISTENT_ID", length = 36)
-    private String persistentId;
+    @Column(name = "IMMORTAL_ID", length = 36)
+    private String immortalId;
 
     @Column(name = "LAST_MODIFIED")
     private Date lastModified;
@@ -204,20 +217,20 @@ public class KuokuoItem extends PersistentObject
     }
 
     /**
-     * @return the persistentId
+     * @return the immortalId
      */
-    public String getPersistentId()
+    public String getImmortalId()
     {
-        return persistentId;
+        return immortalId;
     }
 
     /**
-     * @param persistentId
-     *            the persistentId to set
+     * @param immortalId
+     *            the immortalId to set
      */
-    public void setPersistentId(String persistentId)
+    public void setImmortalId(String immortalId)
     {
-        this.persistentId = persistentId;
+        this.immortalId = immortalId;
     }
 
     /**

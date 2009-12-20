@@ -6,21 +6,20 @@ package org.kuokuo.search;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
 import org.kuokuo.Configuration;
-import org.kuokuo.client.data.DoubanResource;
-import org.kuokuo.client.data.DoubanResourceType;
 import org.kuokuo.client.data.IndexStatus;
 import org.kuokuo.client.data.PagingUpdateItems;
 import org.kuokuo.client.data.QueryResult;
 import org.kuokuo.client.data.QueryResultItem;
 import org.kuokuo.resource.ResourceDef;
 import org.kuokuo.resource.ResourceReader;
-import org.kuokuo.server.CachedDoubanService;
+import org.kuokuo.server.dao.DoubanResourceDao;
 import org.kuokuo.server.dao.KuokuoItemDao;
 
 /**
@@ -61,8 +60,6 @@ public class SearchEngineService
             status.setStartDate(new SimpleDateFormat("MMM d").format(new Date()));
 
             monitor = new IndexMonitor();
-            
-            douban=new CachedDoubanService();
         }
         catch (Exception e)
         {
@@ -95,13 +92,17 @@ public class SearchEngineService
             }
         }
         dao.createFullTextSession();
+
+        DoubanResourceDao doubanResourceDao = new DoubanResourceDao();
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE , -10);
+        doubanResourceDao.removeObsoleteResource(calendar.getTime());
+        
         status.setIndexCost(System.currentTimeMillis() - start);
         status.setLastUpdate(new SimpleDateFormat("MMM d, H:mm").format(new Date()));
     }
 
     private IndexStatus status;
-
-    private CachedDoubanService douban;
 
     public IndexStatus getIndexStatus()
     {
@@ -128,11 +129,5 @@ public class SearchEngineService
         result.setItems(dao.fullTextSearch(queryStr));
         status.setQueryCount(status.getQueryCount() + 1);
         return result;
-    }
-
-    public DoubanResource loadDataFromDouban(String name, DoubanResourceType type, String cacheKey) throws Exception
-    {
-        DoubanResource dbResource = douban.getInfo(name, type, cacheKey);
-        return dbResource;
     }
 }

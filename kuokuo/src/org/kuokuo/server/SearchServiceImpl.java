@@ -3,8 +3,6 @@ package org.kuokuo.server;
 import java.util.List;
 import java.util.Vector;
 
-import org.kuokuo.client.data.DoubanResource;
-import org.kuokuo.client.data.DoubanResourceType;
 import org.kuokuo.client.data.IndexStatus;
 import org.kuokuo.client.data.KuokuoItem;
 import org.kuokuo.client.data.PaginationItem;
@@ -41,11 +39,6 @@ public class SearchServiceImpl extends RemoteServiceServlet implements SearchSer
     public IndexStatus getIndexStatus()
     {
         return SearchEngineService.getInstance().getIndexStatus();
-    }
-
-    public DoubanResource getDoubanInfo(String name, DoubanResourceType type, String cacheKey) throws Exception
-    {
-        return SearchEngineService.getInstance().loadDataFromDouban(name, type, cacheKey);
     }
 
     /**

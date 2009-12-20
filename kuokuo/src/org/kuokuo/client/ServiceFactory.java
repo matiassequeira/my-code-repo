@@ -3,6 +3,8 @@
  */
 package org.kuokuo.client;
 
+import org.kuokuo.client.service.ContentService;
+import org.kuokuo.client.service.ContentServiceAsync;
 import org.kuokuo.client.service.SearchService;
 import org.kuokuo.client.service.SearchServiceAsync;
 
@@ -18,4 +20,5 @@ public class ServiceFactory
 {
     public final static SearchServiceAsync SERVICE_SEARCH = GWT.create(SearchService.class);
 
+    public final static ContentServiceAsync SERVICE_CONTENT = GWT.create(ContentService.class);
 }

@@ -5,9 +5,8 @@ package org.kuokuo.client.panel;
 
 import org.kuokuo.client.ServiceFactory;
 import org.kuokuo.client.data.DoubanResource;
-import org.kuokuo.client.data.DoubanResourceType;
 import org.kuokuo.client.data.KuokuoItem;
-import org.kuokuo.client.service.SearchServiceAsync;
+import org.kuokuo.client.service.ContentServiceAsync;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -22,6 +21,8 @@ import com.google.gwt.user.client.ui.SimplePanel;
  */
 public class MovieItemPanel extends SearchResultItemPanel
 {
+    private static ContentServiceAsync service = ServiceFactory.SERVICE_CONTENT;
+    
     /**
      * @param item
      */
@@ -38,22 +39,20 @@ public class MovieItemPanel extends SearchResultItemPanel
     {
         super.buildContent(item);
 
-        // ajax load douban info
-        SearchServiceAsync searchService = ServiceFactory.SERVICE_SEARCH;
-        searchService.getDoubanInfo(item.getName(), DoubanResourceType.MOVIE, item.getPath(), new AsyncCallback<DoubanResource>()
+        service.getDoubanResource(KuokuoItem.TYPE_MOVIE, item.getName(), new AsyncCallback<DoubanResource>()
         {
-
-            public void onSuccess(DoubanResource result)
-            {
-                if(result != null && thumbnail != null)
-                {
-                    thumbnail.setWidget(new HTML("<a href=\"" + result.selfURL + "\" target=\"blank\"><img width=\"60px\" border=0 src=\"" + result.imageURL + "\"></a>"));
-                }
-            }
 
             public void onFailure(Throwable caught)
             {
                 GWT.log("fail to load douban info", caught);
+            }
+
+            public void onSuccess(DoubanResource result)
+            {
+                if(result != null && result.getImage() != null && thumbnail != null)
+                {
+                    thumbnail.setWidget(new HTML("<a href=\"" + result.getAlternate() + "\" target=\"blank\"><img width=\"60px\" border=0 src=\"" + result.getImage() + "\"></a>"));
+                }
             }
         });
     }
