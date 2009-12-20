@@ -5,7 +5,6 @@ package org.kuokuo.client.panel;
 
 import java.util.List;
 
-import org.kuokuo.client.Search;
 import org.kuokuo.client.data.KuokuoItem;
 import org.kuokuo.client.data.QueryResult;
 
@@ -51,11 +50,11 @@ public class SearchResultPanel extends VerticalPanel
         for (KuokuoItem item : resultItems)
         {
             Composite resultItem = null;
-            if(Search.TYPE_MOVIE.equals(item.getType()))
+            if(KuokuoItem.TYPE_MOVIE.equals(item.getType()))
             {
                 resultItem = new MovieItemPanel(item);
             }
-            else if(Search.TYPE_MUSIC.equals(item.getType()))
+            else if(KuokuoItem.TYPE_MUSIC.equals(item.getType()))
             {
                 resultItem = new MusicItemPanel(item);
             }

@@ -1,7 +1,5 @@
 package org.kuokuo.client.service;
 
-import org.kuokuo.client.data.DoubanResource;
-import org.kuokuo.client.data.DoubanResourceType;
 import org.kuokuo.client.data.IndexStatus;
 import org.kuokuo.client.data.KuokuoItem;
 import org.kuokuo.client.data.PaginationItem;
@@ -21,8 +19,6 @@ public interface SearchService extends RemoteService
     public IndexStatus getIndexStatus();
     
     public PaginationItem<KuokuoItem> getKuokuoItemOrderByModified(int start, int pageSize);
-    
-    public DoubanResource getDoubanInfo(String name, DoubanResourceType type, String cacheKey) throws Exception;
 }
 
 

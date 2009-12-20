@@ -1,7 +1,5 @@
 package org.kuokuo.client.service;
 
-import org.kuokuo.client.data.DoubanResource;
-import org.kuokuo.client.data.DoubanResourceType;
 import org.kuokuo.client.data.IndexStatus;
 import org.kuokuo.client.data.KuokuoItem;
 import org.kuokuo.client.data.PaginationItem;
@@ -19,8 +17,6 @@ public interface SearchServiceAsync
     public void getIndexStatus(AsyncCallback<IndexStatus> callback);
     
     public void getKuokuoItemOrderByModified(int start, int pageSize, AsyncCallback<PaginationItem<KuokuoItem>> callback);
-    
-    public void getDoubanInfo(String name, DoubanResourceType type, String cacheKey, AsyncCallback<DoubanResource> callback);
 }
 
 

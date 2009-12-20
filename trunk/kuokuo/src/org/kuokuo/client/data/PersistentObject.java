@@ -7,11 +7,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.MappedSuperclass;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -22,8 +20,7 @@ import org.hibernate.search.annotations.DocumentId;
  * @author Dingmeng (xuedm79@gmail.com)
  * 
  */
-@Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@MappedSuperclass
 public abstract class PersistentObject implements Serializable
 {
     private static final long serialVersionUID = 5237032887863294183L;

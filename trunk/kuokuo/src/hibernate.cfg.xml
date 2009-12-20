@@ -24,5 +24,6 @@
 		
 		<property name="hibernate.search.default.directory_provider">org.hibernate.search.store.RAMDirectoryProvider</property>
 		<mapping class="org.kuokuo.client.data.KuokuoItem"/>
+		<mapping class="org.kuokuo.client.data.DoubanResource"/>
 	</session-factory>
 </hibernate-configuration>

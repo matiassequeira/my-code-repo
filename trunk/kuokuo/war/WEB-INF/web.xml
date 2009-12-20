@@ -14,9 +14,17 @@
 		<servlet-name>searchServlet</servlet-name>
 		<servlet-class>org.kuokuo.server.SearchServiceImpl</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>contentServlet</servlet-name>
+		<servlet-class>org.kuokuo.server.ContentServiceImpl</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>searchServlet</servlet-name>
 		<url-pattern>/search/search</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>contentServlet</servlet-name>
+		<url-pattern>/search/content</url-pattern>
 	</servlet-mapping>
 	<listener>
 		<listener-class>org.kuokuo.KuokuoContextListener</listener-class>
