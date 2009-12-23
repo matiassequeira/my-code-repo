@@ -19,6 +19,8 @@ public interface SearchService extends RemoteService
     public IndexStatus getIndexStatus();
     
     public PaginationItem<KuokuoItem> getKuokuoItemOrderByModified(int start, int pageSize);
+    
+    public PaginationItem<KuokuoItem> getKuokuoItemOrderByModified(String type, int start, int pageSize);
 }
 
 

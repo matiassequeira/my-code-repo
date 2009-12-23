@@ -18,6 +18,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
@@ -99,10 +100,19 @@ public class KuokuoItemDao extends AbstractDao
      */
     public int getAllItemsCount()
     {
+        return getAllItemsCount(null);
+    }
+    
+    public int getAllItemsCount(String type)
+    {
         Session session = getSession();
         try
         {
             Criteria crit = session.createCriteria(KuokuoItem.class);
+            if(type != null)
+            {
+                crit.add(Restrictions.eq("type", type));
+            }
             return crit.list().size();
         }
         finally
@@ -111,14 +121,23 @@ public class KuokuoItemDao extends AbstractDao
         }
     }
     
-    @SuppressWarnings("unchecked")
     public List<KuokuoItem> getKuokuoItemOrderByModified(int from, int pageSize)
+    {
+        return getKuokuoItemOrderByModified(null, from, pageSize);
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<KuokuoItem> getKuokuoItemOrderByModified(String type, int from, int pageSize)
     {
         Session session = getSession();
         try
         {
             Criteria crit = session.createCriteria(KuokuoItem.class);
             crit = crit.addOrder(Order.desc("lastModified"));
+            if(type != null)
+            {
+                crit.add(Restrictions.eq("type", type));
+            }
             crit.setFirstResult(from);
             crit.setMaxResults(pageSize);
             return crit.list();
@@ -128,7 +147,7 @@ public class KuokuoItemDao extends AbstractDao
             releaseSession(session);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     public void createFullTextSession()
     {

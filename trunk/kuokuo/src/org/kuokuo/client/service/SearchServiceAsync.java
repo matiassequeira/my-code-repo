@@ -17,6 +17,8 @@ public interface SearchServiceAsync
     public void getIndexStatus(AsyncCallback<IndexStatus> callback);
     
     public void getKuokuoItemOrderByModified(int start, int pageSize, AsyncCallback<PaginationItem<KuokuoItem>> callback);
+    
+    public void getKuokuoItemOrderByModified(String type, int start, int pageSize, AsyncCallback<PaginationItem<KuokuoItem>> callback);
 }
 
 

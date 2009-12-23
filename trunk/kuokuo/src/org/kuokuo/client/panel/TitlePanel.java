@@ -38,6 +38,8 @@ public class TitlePanel extends HorizontalPanel implements ClickHandler, KeyPres
 
     protected CheckBox chkGame;
 
+    protected CheckBox chkBook;
+
     protected CheckBox chkOther;
 
     protected HTML logo;
@@ -70,28 +72,32 @@ public class TitlePanel extends HorizontalPanel implements ClickHandler, KeyPres
         chkMovie = new CheckBox("电影");
         chkMusic = new CheckBox("音乐");
         chkGame = new CheckBox("游戏");
+        chkBook = new CheckBox("图书");
         chkOther = new CheckBox("其它");
         chkAll.setValue(true);
         chkMovie.setValue(true);
-        chkMusic.setValue(true);
         chkGame.setValue(true);
+        chkMusic.setValue(true);
+        chkBook.setValue(true);
         chkOther.setValue(true);
         chkAll.addClickHandler(this);
         chkMovie.addClickHandler(this);
         chkMusic.addClickHandler(this);
         chkGame.addClickHandler(this);
         chkOther.addClickHandler(this);
+        chkBook.addClickHandler(this);
         secondRow.setSpacing(5);
         secondRow.add(chkAll);
         secondRow.add(chkMovie);
         secondRow.add(chkMusic);
         secondRow.add(chkGame);
+        secondRow.add(chkBook);
         secondRow.add(chkOther);
-        
         chkAll.setEnabled(false);
         chkMovie.setEnabled(false);
         chkMusic.setEnabled(false);
         chkGame.setEnabled(false);
+        chkBook.setEnabled(false);
         chkOther.setEnabled(false);
 
         searchPanel.add(secondRow);
@@ -110,15 +116,19 @@ public class TitlePanel extends HorizontalPanel implements ClickHandler, KeyPres
             chkMusic.setValue(chkAll.getValue());
             chkGame.setValue(chkAll.getValue());
             chkOther.setValue(chkAll.getValue());
+            chkBook.setValue(chkAll.getValue());
         }
-        if (event.getSource().equals(chkMovie) || event.getSource().equals(chkMusic) || event.getSource().equals(chkGame) || event.getSource().equals(chkOther))
+        if (event.getSource().equals(chkMovie) || event.getSource().equals(chkMusic) || event.getSource().equals(chkGame) || event.getSource().equals(chkOther)|| event.getSource().equals(chkBook))
         {
             boolean selectAll = chkMovie.getValue() && chkMusic.getValue() && chkGame.getValue() && chkOther.getValue();
             chkAll.setValue(selectAll);
         }
         if(event.getSource().equals(btnSearch))
         {
-            Search.getInstance().doSearch(txtQuery.getValue());
+            if(txtQuery.getValue() != null && !txtQuery.getValue().trim().equals(""))
+            {
+                Search.getInstance().doSearch(txtQuery.getValue());
+            }
         }
         if(event.getSource().equals(logo))
         {
@@ -133,7 +143,10 @@ public class TitlePanel extends HorizontalPanel implements ClickHandler, KeyPres
     {
         if(event.getSource().equals(txtQuery) && event.getCharCode() == 13)
         {
-            Search.getInstance().doSearch(txtQuery.getValue());
+            if(txtQuery.getValue() != null && !txtQuery.getValue().trim().equals(""))
+            {
+                Search.getInstance().doSearch(txtQuery.getValue());
+            }
         }
     }
 
