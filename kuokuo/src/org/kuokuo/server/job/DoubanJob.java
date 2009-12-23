@@ -16,6 +16,7 @@ import org.kuokuo.server.dao.DoubanResourceDao;
 import com.google.gdata.client.douban.DoubanService;
 import com.google.gdata.data.douban.SubjectEntry;
 import com.google.gdata.data.douban.SubjectFeed;
+import com.google.gdata.data.extensions.Rating;
 import com.google.gdata.util.ServiceException;
 
 /**
@@ -133,9 +134,14 @@ public class DoubanJob implements Runnable
     {
         DoubanResource rv = new DoubanResource();
         rv.setImage(entry.getLink("image", null).getHref());
-        // rv.id=entry.getId();
         rv.setAlternate(entry.getLink("alternate", null).getHref());
-
+        Rating rating = entry.getRating();
+        if(rating != null)
+        {
+            rv.setAverage(rating.getAverage());
+            rv.setNumRaters(rating.getNumRaters());
+        }
+        
         return rv;
     }
 

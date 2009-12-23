@@ -25,6 +25,8 @@ public class SearchResultItemPanel extends Composite
     
     protected SimplePanel thumbnail;
     
+    protected RatingPanel ratingPanel;
+    
     protected void buildContent(KuokuoItem item)
     {
         HorizontalPanel mainPanel = new HorizontalPanel();
@@ -52,6 +54,9 @@ public class SearchResultItemPanel extends Composite
         }
         panel.add(row);
 
+        ratingPanel = new RatingPanel();
+        panel.add(ratingPanel);
+        
         row = new HorizontalPanel();
         String str = "更新时间：" + DateTimeFormat.getShortDateTimeFormat().format(item.getLastModified());
         if(!item.isFolder())
