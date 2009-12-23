@@ -49,9 +49,16 @@ public class MovieItemPanel extends SearchResultItemPanel
 
             public void onSuccess(DoubanResource result)
             {
-                if(result != null && result.getImage() != null && thumbnail != null)
+                if (result != null && result.getImage() != null && thumbnail != null)
                 {
-                    thumbnail.setWidget(new HTML("<a href=\"" + result.getAlternate() + "\" target=\"blank\"><img width=\"60px\" border=0 src=\"" + result.getImage() + "\"></a>"));
+                    thumbnail.setWidget(new HTML("<a href=\"" + result.getAlternate() + "\" target=\"blank\"><img width=\"60px\" border=0 src=\""
+                            + result.getImage() + "\"></a>"));
+                    ratingPanel.setVisible(true);
+                    ratingPanel.setRating(result.getAverage(), result.getNumRaters());
+                }
+                else
+                {
+                    ratingPanel.setVisible(false);
                 }
             }
         });

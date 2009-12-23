@@ -52,6 +52,12 @@ public class MusicItemPanel extends SearchResultItemPanel
                 {
                     thumbnail.setWidget(new HTML("<a href=\"" + result.getAlternate() + "\" target=\"blank\"><img width=\"60px\" border=0 src=\""
                             + result.getImage() + "\"></a>"));
+                    ratingPanel.setVisible(true);
+                    ratingPanel.setRating(result.getAverage(), result.getNumRaters());
+                }
+                else
+                {
+                    ratingPanel.setVisible(false);
                 }
             }
         });
