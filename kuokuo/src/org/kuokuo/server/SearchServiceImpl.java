@@ -46,17 +46,22 @@ public class SearchServiceImpl extends RemoteServiceServlet implements SearchSer
      */
     public PaginationItem<KuokuoItem> getKuokuoItemOrderByModified(int start, int pageSize)
     {
+        return getKuokuoItemOrderByModified(null, start, pageSize);
+    }
+    
+    public PaginationItem<KuokuoItem> getKuokuoItemOrderByModified(String type, int start, int pageSize)
+    {
         try
         {
             KuokuoItemDao dao = new KuokuoItemDao();
 
-            List<KuokuoItem> list = dao.getKuokuoItemOrderByModified(start, pageSize);
+            List<KuokuoItem> list = dao.getKuokuoItemOrderByModified(type, start, pageSize);
             List<KuokuoItem> ret = new Vector<KuokuoItem>(list.size());
             for (KuokuoItem item : list)
             {
                 ret.add(item);
             }
-            int total = dao.getAllItemsCount();
+            int total = dao.getAllItemsCount(type);
             PaginationItem<KuokuoItem> rv = new PaginationItem<KuokuoItem>();
             rv.setList(ret);
             rv.setStart(start);
@@ -69,4 +74,5 @@ public class SearchServiceImpl extends RemoteServiceServlet implements SearchSer
             throw new RuntimeException(e);
         }
     }
+    
 }

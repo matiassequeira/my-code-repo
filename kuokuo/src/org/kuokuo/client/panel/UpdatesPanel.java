@@ -4,15 +4,12 @@
 package org.kuokuo.client.panel;
 
 import java.util.List;
+import java.util.Vector;
 
-import org.kuokuo.client.ServiceFactory;
 import org.kuokuo.client.data.KuokuoItem;
-import org.kuokuo.client.data.PaginationItem;
-import org.kuokuo.client.service.SearchServiceAsync;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -24,91 +21,46 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class UpdatesPanel extends VerticalPanel
 {
-    protected VerticalPanel contentPanel;
-
-    protected HorizontalPanel footerPanel;
-
-    protected PaginationPanel pagingPanel1;
+    protected TabPanel tabPanel;
     
-    protected PaginationPanel pagingPanel2;
+    protected List<UpdateTabItemPanel> tabItems;
     
     public UpdatesPanel()
     {
-        pagingPanel1 = new PaginationPanel()
-        {
-            public void page(int start, int pageSize)
-            {
-                queryData(start, pageSize);
-            }
-        };
-        pagingPanel2 = new PaginationPanel()
-        {
-            public void page(int start, int pageSize)
-            {
-                queryData(start, pageSize);
-            }
-        };
+        tabPanel = new TabPanel();
         
-        TabPanel tabPanel = new TabPanel();
-        contentPanel = new VerticalPanel();
-        contentPanel.setSpacing(5);
-        tabPanel.add(contentPanel, "最近更新");
+        tabItems = new Vector<UpdateTabItemPanel>();
+        
+        UpdateTabItemPanel itemPanel = new UpdateTabItemPanel(null);
+        itemPanel.queryData(0, 10);
+        tabItems.add(itemPanel);
+        tabItems.add(new UpdateTabItemPanel(KuokuoItem.TYPE_MOVIE));
+        tabItems.add(new UpdateTabItemPanel(KuokuoItem.TYPE_MUSIC));
+        tabItems.add(new UpdateTabItemPanel(KuokuoItem.TYPE_GAME));
+        tabItems.add(new UpdateTabItemPanel(KuokuoItem.TYPE_BOOK));
+        
+        
+        tabPanel.add(tabItems.get(0), "最近更新");
+        tabPanel.add(tabItems.get(1), "电影");
+        tabPanel.add(tabItems.get(2), "音乐");
+        tabPanel.add(tabItems.get(3), "游戏");
+        tabPanel.add(tabItems.get(4), "图书");
         tabPanel.selectTab(0);
         tabPanel.setWidth("100%");
         this.add(tabPanel);
         this.setCellWidth(tabPanel, "80%");
-        this.setCellHorizontalAlignment(contentPanel, ALIGN_LEFT);
-
-        footerPanel = new HorizontalPanel();
-        this.add(footerPanel);
-        this.setCellHorizontalAlignment(footerPanel, ALIGN_RIGHT);
-        queryData(0, 10);
-    }
-
-    private void queryData(int start, int pageSize)
-    {
-        SearchServiceAsync searchService = ServiceFactory.SERVICE_SEARCH;
-        searchService.getKuokuoItemOrderByModified(start, pageSize, new AsyncCallback<PaginationItem<KuokuoItem>>()
+        //this.setCellHorizontalAlignment(contentPanel, ALIGN_LEFT);
+        tabPanel.addSelectionHandler(new SelectionHandler<Integer>()
         {
-            public void onSuccess(PaginationItem<KuokuoItem> items)
+            
+            public void onSelection(SelectionEvent<Integer> event)
             {
-                bindData(items);
-            }
-
-            public void onFailure(Throwable caught)
-            {
-
+                UpdateTabItemPanel itemPanel = tabItems.get(event.getSelectedItem());
+                if(itemPanel != null)
+                {
+                    itemPanel.queryData(0, 10);
+                }
             }
         });
-    }
-    
-    protected void bindData(PaginationItem<KuokuoItem> items)
-    {
-        int start = items.getStart();
-        int total = items.getTotal();
-        contentPanel.clear();
-        pagingPanel1.bindData(start, total);
-        contentPanel.add(pagingPanel1);
-        List<KuokuoItem> list = items.getList();
-        
-        for(KuokuoItem item : list)
-        {
-            Composite resultItem = null;
-            if(KuokuoItem.TYPE_MOVIE.equals(item.getType()))
-            {
-                resultItem = new MovieItemPanel(item);
-            }
-            else if(KuokuoItem.TYPE_MUSIC.equals(item.getType()))
-            {
-                resultItem = new MusicItemPanel(item);
-            }
-            else
-            {
-                resultItem = new SearchResultItemPanel(item);
-            }
-            contentPanel.add(resultItem);
-        }
-        pagingPanel2.bindData(start, total);
-        contentPanel.add(pagingPanel2);
     }
 }
