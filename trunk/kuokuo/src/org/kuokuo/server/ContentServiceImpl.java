@@ -44,8 +44,22 @@ public class ContentServiceImpl extends RemoteServiceServlet implements ContentS
         if(resource == null)
         {
             DoubanJob.getService().offer(type, queryWords);
-            return null;
         }
+        else
+        {
+            return resource;
+        }
+        
+        try
+        {
+            Thread.sleep(2000);
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+        
+        resource = dao.queryResource(type, queryWords);
         return resource;
     }
 
