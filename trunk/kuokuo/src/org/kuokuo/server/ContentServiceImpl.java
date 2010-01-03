@@ -11,6 +11,7 @@ import org.kuokuo.client.data.MovieItem;
 import org.kuokuo.client.service.ContentService;
 import org.kuokuo.server.dao.DoubanResourceDao;
 import org.kuokuo.server.job.DoubanJob;
+import org.kuokuo.server.job.douban.QueryResource;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -43,7 +44,7 @@ public class ContentServiceImpl extends RemoteServiceServlet implements ContentS
         DoubanResource resource = dao.queryResource(type, queryWords);
         if(resource == null)
         {
-            DoubanJob.getService().offer(type, queryWords);
+            DoubanJob.getService().offer(new QueryResource(type, queryWords));
         }
         else
         {
