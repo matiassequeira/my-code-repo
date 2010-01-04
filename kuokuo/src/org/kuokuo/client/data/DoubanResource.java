@@ -13,6 +13,9 @@ public class DoubanResource extends PersistentObject
     @Column(name = "TYPE", nullable = false, length = 50)
     private String type;
 
+    @Column(name = "DOUBAN_ID", nullable = false, length = 50)
+    private String doubanId;
+    
     @Column(name = "AVERAGE")
     private float average;
     
@@ -34,9 +37,12 @@ public class DoubanResource extends PersistentObject
     @Column(name = "TITLE", length = 100)
     private String title;
 
+    @Column(name = "SUMMARY", length = 1000)
+    private String summary;
+
     @Column(name = "QUERY_WORDS", nullable = false, length = 256)
     private String queryWords;
-
+    
     /**
      * @return the average
      */
@@ -179,5 +185,37 @@ public class DoubanResource extends PersistentObject
     public void setType(String type)
     {
         this.type = type;
+    }
+
+    /**
+     * @return the doubanId
+     */
+    public String getDoubanId()
+    {
+        return doubanId;
+    }
+
+    /**
+     * @param doubanId the doubanId to set
+     */
+    public void setDoubanId(String doubanId)
+    {
+        this.doubanId = doubanId;
+    }
+
+    /**
+     * @return the summary
+     */
+    public String getSummary()
+    {
+        return summary;
+    }
+
+    /**
+     * @param summary the summary to set
+     */
+    public void setSummary(String summary)
+    {
+        this.summary = summary;
     }
 }
