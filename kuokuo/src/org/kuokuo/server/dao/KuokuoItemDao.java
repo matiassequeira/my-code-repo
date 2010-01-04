@@ -206,4 +206,20 @@ public class KuokuoItemDao extends AbstractDao
             releaseSession(session);
         }
     }
+    
+    public KuokuoItem saveOrUpdate(KuokuoItem item)
+    {
+        Session session = getSession();
+        try
+        {
+            session.beginTransaction();
+            session.saveOrUpdate(item);
+            session.getTransaction().commit();
+            return item;
+        }
+        finally
+        {
+            releaseSession(session);
+        }
+    }
 }

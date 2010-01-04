@@ -9,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -81,6 +83,10 @@ public class KuokuoItem extends PersistentObject
     @Transient
     private float score;
 
+    @OneToOne
+    @JoinColumn(name="DOUBAN_FK")    
+    private DoubanResource doubanResource;
+    
     /**
      * @return the type
      */
@@ -279,5 +285,21 @@ public class KuokuoItem extends PersistentObject
     public void setScore(float score)
     {
         this.score = score;
+    }
+
+    /**
+     * @return the doubanResource
+     */
+    public DoubanResource getDoubanResource()
+    {
+        return doubanResource;
+    }
+
+    /**
+     * @param doubanResource the doubanResource to set
+     */
+    public void setDoubanResource(DoubanResource doubanResource)
+    {
+        this.doubanResource = doubanResource;
     }
 }

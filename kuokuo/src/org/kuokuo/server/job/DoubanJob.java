@@ -76,7 +76,7 @@ public class DoubanJob implements Runnable
             }
             try
             {
-                Thread.sleep(2000);
+                Thread.sleep(3500);
             }
             catch (InterruptedException e)
             {

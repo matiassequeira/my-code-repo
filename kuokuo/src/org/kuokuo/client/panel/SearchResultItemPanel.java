@@ -10,6 +10,7 @@ import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -35,8 +36,8 @@ public class SearchResultItemPanel extends Composite
         thumbnail = buildThumbnail();
         mainPanel.add(thumbnail);
         
-        VerticalPanel panel = new VerticalPanel();
-        panel.setSpacing(5);
+        VerticalPanel fpanel = new VerticalPanel();
+        fpanel.setSpacing(5);
 
         HorizontalPanel row = new HorizontalPanel();
         if(item.getHighlightName() == null)
@@ -52,10 +53,19 @@ public class SearchResultItemPanel extends Composite
         {
             row.add(new HTML("- <i>" + item.getScore() + "</i>"));
         }
-        panel.add(row);
+        fpanel.add(row);
 
         ratingPanel = new RatingPanel();
-        panel.add(ratingPanel);
+        fpanel.add(ratingPanel);
+        
+        Panel[] extPanels = buildExtPanels(item);
+        if(extPanels != null)
+        {
+            for (Panel panel : extPanels)
+            {
+                fpanel.add(panel);
+            }
+        }
         
         row = new HorizontalPanel();
         String str = "更新时间：" + DateTimeFormat.getShortDateTimeFormat().format(item.getLastModified());
@@ -66,18 +76,23 @@ public class SearchResultItemPanel extends Composite
         HTML html = new HTML(str);
         html.setStyleName("item-gray");
         row.add(html);
-        panel.add(row);
+        fpanel.add(row);
 
         row = new HorizontalPanel();
         row.add(new HTML("<a href=\"" + item.getPath() +  "\" target=\"blank\">" + trimName(item.getPath(), 80) +  "</a>"));
-        panel.add(row);
+        fpanel.add(row);
 
-        mainPanel.add(panel);
+        mainPanel.add(fpanel);
     }
 
     protected SimplePanel buildThumbnail()
     {
         return new SimplePanel();
+    }
+    
+    protected Panel[] buildExtPanels(KuokuoItem item)
+    {
+        return null;
     }
     
     protected String trimName(String name, int length)
