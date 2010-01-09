@@ -12,6 +12,7 @@ import org.kuokuo.client.service.SearchServiceAsync;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
@@ -73,6 +74,8 @@ public class UpdateTabItemPanel extends VerticalPanel
         this.add(pagingPanel1);
         List<KuokuoItem> list = items.getList();
         
+        boolean first = true;
+        
         for(KuokuoItem item : list)
         {
             Composite resultItem = null;
@@ -88,7 +91,21 @@ public class UpdateTabItemPanel extends VerticalPanel
             {
                 resultItem = new SearchResultItemPanel(item);
             }
-            this.add(resultItem);
+            
+            if(resultItem != null)
+            {
+                if(first)
+                {
+                    first = false;
+                }
+                else
+                {
+                    HTML spacer = new HTML("<hr>");
+                    spacer.setStylePrimaryName("content-space");
+                    this.add(spacer);
+                }
+                this.add(resultItem);
+            }
         }
         pagingPanel2.bindData(start, total);
         this.add(pagingPanel2);

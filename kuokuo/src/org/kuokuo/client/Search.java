@@ -4,14 +4,13 @@ import org.kuokuo.client.data.QueryResult;
 import org.kuokuo.client.panel.FooterPanel;
 import org.kuokuo.client.panel.SearchResultPanel;
 import org.kuokuo.client.panel.TitlePanel;
-import org.kuokuo.client.panel.WelcomePanel;
+import org.kuokuo.client.panel.UpdatesPanel;
 import org.kuokuo.client.service.SearchService;
 import org.kuokuo.client.service.SearchServiceAsync;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -40,7 +39,7 @@ public class Search implements EntryPoint
 
     protected VerticalPanel contentPanel;
 
-    protected WelcomePanel welcomePanel;
+    protected UpdatesPanel welcomePanel;
     
     protected SearchResultPanel searchResultPanel;
     
@@ -51,36 +50,56 @@ public class Search implements EntryPoint
     {
         instance = this;
 
-        VerticalPanel panel = new VerticalPanel();
-        panel.setWidth("100%");
-        HorizontalPanel headerPanel = new HorizontalPanel();
-        panel.add(headerPanel);
-        panel.add(new HTML("<hr>"));
+        VerticalPanel mainPanel = new VerticalPanel();
+        mainPanel.setWidth("100%");
+
+        VerticalPanel centerWrapper = new VerticalPanel();
+        centerWrapper.setWidth("910px");
+        centerWrapper.setStylePrimaryName("centerWrapper");
 
         titlePanel = new TitlePanel();
-        panel.add(titlePanel);
+        titlePanel.setWidth("910px");
+        titlePanel.setHeight("158px");
+        centerWrapper.add(titlePanel);
+        centerWrapper.setCellHorizontalAlignment(titlePanel, VerticalPanel.ALIGN_CENTER);
 
-        panel.add(new HTML("<hr>"));
+        HorizontalPanel contentWrapper = new HorizontalPanel();
+        contentWrapper.setWidth("910px");
+        contentWrapper.setHeight("500px");
+        
         contentPanel = new VerticalPanel();
+        contentPanel.setStylePrimaryName("primaryContent");
         contentPanel.setWidth("100%");
+        contentWrapper.add(contentPanel);
+        contentWrapper.setCellWidth(contentPanel, "585px");
         
         contentPanel.clear();
-        if(welcomePanel == null)
+        if (welcomePanel == null)
         {
-            welcomePanel = new WelcomePanel();
+            welcomePanel = new UpdatesPanel();
         }
         contentPanel.add(welcomePanel);
         
-        panel.add(contentPanel);
-        panel.setCellHeight(contentPanel, "500px");
-        panel.setCellWidth(contentPanel, "100%");
-        panel.add(new HTML("<hr>"));
+        VerticalPanel secondaryContent = new VerticalPanel();
+        secondaryContent.setWidth("100%");
+        secondaryContent.setHeight("500px");
+        secondaryContent.setStylePrimaryName("secondaryContent");
+        contentWrapper.add(secondaryContent);
+        contentWrapper.setCellWidth(secondaryContent, "267px");
+        
+        centerWrapper.add(contentWrapper);
+        centerWrapper.setCellHorizontalAlignment(contentWrapper, VerticalPanel.ALIGN_CENTER);
 
+        mainPanel.add(centerWrapper);
+        mainPanel.setCellHorizontalAlignment(centerWrapper, VerticalPanel.ALIGN_CENTER);
+        
         footerPanel = new FooterPanel();
-        panel.add(footerPanel);
-        panel.setCellHorizontalAlignment(footerPanel, VerticalPanel.ALIGN_CENTER);
+        footerPanel.setWidth("100%");
+        mainPanel.add(footerPanel);
+        mainPanel.setCellHorizontalAlignment(footerPanel, VerticalPanel.ALIGN_CENTER);
 
-        RootPanel.get().add(panel);
+        RootPanel.get().add(mainPanel);
+        RootPanel.get().setStylePrimaryName("root");
     }
 
     public void doSearch(String query)
@@ -106,14 +125,14 @@ public class Search implements EntryPoint
         });
     }
     
-    public void gotoWelcome()
+    public void gotoHomepage()
     {
         contentPanel.clear();
         if(welcomePanel == null)
         {
-            welcomePanel = new WelcomePanel();
+            welcomePanel = new UpdatesPanel();
         }
-        welcomePanel.refresh();
         contentPanel.add(welcomePanel);
+        titlePanel.reset();
     }
 }

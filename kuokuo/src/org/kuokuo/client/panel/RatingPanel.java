@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
  */
 public class RatingPanel extends SimplePanel
 {
-    public void setRating(float rating, int votes)
+    public void setRating(double rating, int votes)
     {
         StringBuffer sb = new StringBuffer();
         sb.append("评分：");

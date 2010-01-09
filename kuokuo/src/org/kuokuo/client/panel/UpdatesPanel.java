@@ -27,8 +27,10 @@ public class UpdatesPanel extends VerticalPanel
     
     public UpdatesPanel()
     {
-        tabPanel = new TabPanel();
+        this.setWidth("100%");
         
+        tabPanel = new TabPanel();
+        tabPanel.setStylePrimaryName("contentTab");
         tabItems = new Vector<UpdateTabItemPanel>();
         
         UpdateTabItemPanel itemPanel = new UpdateTabItemPanel(null);
@@ -48,8 +50,7 @@ public class UpdatesPanel extends VerticalPanel
         tabPanel.selectTab(0);
         tabPanel.setWidth("100%");
         this.add(tabPanel);
-        this.setCellWidth(tabPanel, "80%");
-        //this.setCellHorizontalAlignment(contentPanel, ALIGN_LEFT);
+
         tabPanel.addSelectionHandler(new SelectionHandler<Integer>()
         {
             
