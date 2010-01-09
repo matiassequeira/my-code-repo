@@ -1,40 +1,57 @@
 package org.kuokuo.server;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.kuokuo.client.data.DoubanResource;
 import org.kuokuo.client.data.IndexStatus;
 import org.kuokuo.client.data.KuokuoItem;
 import org.kuokuo.client.data.PaginationItem;
+import org.kuokuo.client.data.QueryInfo;
 import org.kuokuo.client.data.QueryResult;
+import org.kuokuo.client.data.VisitorInfo;
 import org.kuokuo.client.service.SearchService;
 import org.kuokuo.search.SearchEngineService;
 import org.kuokuo.server.dao.DoubanResourceDao;
 import org.kuokuo.server.dao.KuokuoItemDao;
+import org.kuokuo.server.dao.QueryInfoDao;
+import org.kuokuo.server.dao.VisitorInfoDao;
 import org.kuokuo.server.job.DoubanJob;
 import org.kuokuo.server.job.douban.QueryResource;
-
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
  * The server side implementation of the RPC service.
  */
 @SuppressWarnings("serial")
-public class SearchServiceImpl extends RemoteServiceServlet implements SearchService
+public class SearchServiceImpl extends AbstractServiceServlet implements SearchService
 {
 
     public QueryResult query(String input)
     {
         try
         {
+            QueryInfo queryInfo = new QueryInfo();
+            queryInfo.setQueryDate(new Date());
+            queryInfo.setQueryWords(input);
+            
+            HttpSession session = getSession();
+            VisitorInfo visitor = (VisitorInfo) session.getAttribute("visitorInfo");
+            queryInfo.setVisitor(visitor);
+            
+            QueryInfoDao dao = new QueryInfoDao();
+            dao.saveOrUpdate(queryInfo);
+
             QueryResult queryResult = SearchEngineService.getInstance().query(input);
             List<KuokuoItem> list = queryResult.getItems();
             for (KuokuoItem item : list)
             {
                 checkDoubanResource(item);
             }
-            return SearchEngineService.getInstance().query(input);
+            return queryResult;
         }
         catch (Exception e)
         {
@@ -48,6 +65,25 @@ public class SearchServiceImpl extends RemoteServiceServlet implements SearchSer
      */
     public IndexStatus getIndexStatus()
     {
+        HttpSession session = getSession();
+        VisitorInfo visitorInfo = (VisitorInfo) session.getAttribute("visitorInfo");
+        if(visitorInfo == null)
+        {
+            visitorInfo = new VisitorInfo();
+            HttpServletRequest request = getThreadLocalRequest();
+            visitorInfo.setRemoteAddr(request.getRemoteAddr());
+            visitorInfo.setRemoteHost(request.getRemoteHost());
+            visitorInfo.setRemoteUser(request.getRemoteUser());
+            visitorInfo.setUserAgent(request.getHeader("User-Agent"));
+            visitorInfo.setVisitDate(new Date());
+            
+            VisitorInfoDao dao = new VisitorInfoDao();
+            dao.saveOrUpdate(visitorInfo);
+            
+            session.setAttribute("visitorInfo", visitorInfo);
+        }
+        
+        
         return SearchEngineService.getInstance().getIndexStatus();
     }
 
