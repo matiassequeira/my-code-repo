@@ -20,8 +20,11 @@ public class VisitorInfo extends PersistentObject
 {
     private static final long serialVersionUID = -6962500850617922113L;
 
-    @Column(name = "VISIT_DATE")
-    private Date visitDate;
+    @Column(name = "FIRST_VISIT")
+    private Date firstVisit;
+
+    @Column(name = "LAST_VISIT")
+    private Date lastVisit;
 
     @Column(name = "REMOTE_ADDR", length = 50)
     private String remoteAddr;
@@ -36,20 +39,37 @@ public class VisitorInfo extends PersistentObject
     private String userAgent;
 
     /**
-     * @return the visitDate
+     * @return the firstVisit
      */
-    public Date getVisitDate()
+    public Date getFirstVisit()
     {
-        return visitDate;
+        return firstVisit;
     }
 
     /**
-     * @param visitDate
-     *            the visitDate to set
+     * @param firstVisit
+     *            the firstVisit to set
      */
-    public void setVisitDate(Date visitDate)
+    public void setFirstVisit(Date firstVisit)
     {
-        this.visitDate = visitDate;
+        this.firstVisit = firstVisit;
+    }
+
+    /**
+     * @return the lastVisit
+     */
+    public Date getLastVisit()
+    {
+        return lastVisit;
+    }
+
+    /**
+     * @param lastVisit
+     *            the lastVisit to set
+     */
+    public void setLastVisit(Date lastVisit)
+    {
+        this.lastVisit = lastVisit;
     }
 
     /**
