@@ -10,6 +10,7 @@ import org.kuokuo.client.service.SearchServiceAsync;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -100,9 +101,16 @@ public class Search implements EntryPoint
 
         RootPanel.get().add(mainPanel);
         RootPanel.get().setStylePrimaryName("root");
+        
+        History.addValueChangeHandler(new HistoryHandler());
     }
 
     public void doSearch(String query)
+    {
+        doSearch(query, true);
+    }
+    
+    void doSearch(final String query, final boolean history)
     {
         searchService.query(query, new AsyncCallback<QueryResult>()
         {
@@ -121,11 +129,21 @@ public class Search implements EntryPoint
                 searchResultPanel.bindData(result);
                 contentPanel.add(searchResultPanel);
                 footerPanel.refresh();
+
+                if(history)
+                {
+                    History.newItem(HistoryHandler.QUERY + query);
+                }
             }
         });
     }
     
     public void gotoHomepage()
+    {
+        gotoHomepage(true);
+    }
+
+    void gotoHomepage(boolean history)
     {
         contentPanel.clear();
         if(welcomePanel == null)
@@ -134,5 +152,10 @@ public class Search implements EntryPoint
         }
         contentPanel.add(welcomePanel);
         titlePanel.reset();
+        
+        if(history)
+        {
+            History.newItem(HistoryHandler.HOME_PAGE);
+        }
     }
 }
