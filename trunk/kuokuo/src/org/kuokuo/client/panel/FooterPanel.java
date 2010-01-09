@@ -7,6 +7,7 @@ import org.kuokuo.client.ServiceFactory;
 import org.kuokuo.client.data.IndexStatus;
 import org.kuokuo.client.service.SearchServiceAsync;
 
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -34,6 +35,15 @@ public class FooterPanel extends VerticalPanel
         HTML html = new HTML("Kuokuo 1.4 <a href='mailto:xuedm79@gmail.com'>报告错误</a> Powered by GWT, Lucene, Hibernate & MMSeg4J");
         html.setStyleName("page-footer");
         this.add(html);
+        
+        Timer timer = new Timer()
+        {
+            public void run()
+            {
+                refresh();
+            }
+        };
+        timer.scheduleRepeating(60000);
     }
 
     public void refresh()

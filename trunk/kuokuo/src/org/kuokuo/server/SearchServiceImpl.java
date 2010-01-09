@@ -75,14 +75,14 @@ public class SearchServiceImpl extends AbstractServiceServlet implements SearchS
             visitorInfo.setRemoteHost(request.getRemoteHost());
             visitorInfo.setRemoteUser(request.getRemoteUser());
             visitorInfo.setUserAgent(request.getHeader("User-Agent"));
-            visitorInfo.setVisitDate(new Date());
-            
-            VisitorInfoDao dao = new VisitorInfoDao();
-            dao.saveOrUpdate(visitorInfo);
-            
-            session.setAttribute("visitorInfo", visitorInfo);
+            visitorInfo.setFirstVisit(new Date());
         }
+        visitorInfo.setLastVisit(new Date());
+
+        VisitorInfoDao dao = new VisitorInfoDao();
+        dao.saveOrUpdate(visitorInfo);
         
+        session.setAttribute("visitorInfo", visitorInfo);
         
         return SearchEngineService.getInstance().getIndexStatus();
     }
