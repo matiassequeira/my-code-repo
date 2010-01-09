@@ -107,7 +107,7 @@ public class Search implements EntryPoint
 
     public void doSearch(String query)
     {
-        doSearch(query, true);
+        History.newItem(HistoryHandler.QUERY + query);
     }
     
     void doSearch(final String query, final boolean history)
@@ -129,18 +129,13 @@ public class Search implements EntryPoint
                 searchResultPanel.bindData(result);
                 contentPanel.add(searchResultPanel);
                 footerPanel.refresh();
-
-                if(history)
-                {
-                    History.newItem(HistoryHandler.QUERY + query);
-                }
             }
         });
     }
     
     public void gotoHomepage()
     {
-        gotoHomepage(true);
+        History.newItem(HistoryHandler.HOME_PAGE);
     }
 
     void gotoHomepage(boolean history)
@@ -152,10 +147,5 @@ public class Search implements EntryPoint
         }
         contentPanel.add(welcomePanel);
         titlePanel.reset();
-        
-        if(history)
-        {
-            History.newItem(HistoryHandler.HOME_PAGE);
-        }
     }
 }
