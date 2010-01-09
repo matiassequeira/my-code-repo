@@ -13,14 +13,12 @@ import org.kuokuo.server.dao.DoubanResourceDao;
 import org.kuokuo.server.job.DoubanJob;
 import org.kuokuo.server.job.douban.QueryResource;
 
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-
 /**
  * @version Dec 20, 2009 10:21:56 PM
  * @author Dingmeng (xuedm79@gmail.com)
  * 
  */
-public class ContentServiceImpl extends RemoteServiceServlet implements ContentService
+public class ContentServiceImpl extends AbstractServiceServlet implements ContentService
 {
     /**
      * 
@@ -29,7 +27,6 @@ public class ContentServiceImpl extends RemoteServiceServlet implements ContentS
 
     public BookItem getBookItem(BookItem item)
     {
-
         return null;
     }
 
@@ -66,13 +63,11 @@ public class ContentServiceImpl extends RemoteServiceServlet implements ContentS
 
     public GameItem getGameItem(GameItem item)
     {
-
         return null;
     }
 
     public MovieItem getMovieItem(KuokuoItem item)
     {
-
         return null;
     }
 

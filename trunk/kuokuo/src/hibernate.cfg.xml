@@ -19,11 +19,13 @@
 
 		<property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
 		<property name="hibernate.show_sql">true</property>
-		<property name="hibernate.hbm2ddl.auto">create</property>
+		<property name="hibernate.hbm2ddl.auto">update</property>
 <!--		<property name="hibernate.hbm2ddl.auto">validate</property>-->
 		
 		<property name="hibernate.search.default.directory_provider">org.hibernate.search.store.RAMDirectoryProvider</property>
 		<mapping class="org.kuokuo.client.data.KuokuoItem"/>
 		<mapping class="org.kuokuo.client.data.DoubanResource"/>
+		<mapping class="org.kuokuo.client.data.VisitorInfo"/>
+		<mapping class="org.kuokuo.client.data.QueryInfo"/>
 	</session-factory>
 </hibernate-configuration>
