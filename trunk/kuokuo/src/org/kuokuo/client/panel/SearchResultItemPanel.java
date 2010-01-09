@@ -32,6 +32,7 @@ public class SearchResultItemPanel extends Composite
     {
         HorizontalPanel mainPanel = new HorizontalPanel();
         initWidget(mainPanel);
+        mainPanel.setStylePrimaryName("content");
         
         thumbnail = buildThumbnail();
         mainPanel.add(thumbnail);

@@ -28,6 +28,12 @@ public class SearchServiceImpl extends RemoteServiceServlet implements SearchSer
     {
         try
         {
+            QueryResult queryResult = SearchEngineService.getInstance().query(input);
+            List<KuokuoItem> list = queryResult.getItems();
+            for (KuokuoItem item : list)
+            {
+                checkDoubanResource(item);
+            }
             return SearchEngineService.getInstance().query(input);
         }
         catch (Exception e)

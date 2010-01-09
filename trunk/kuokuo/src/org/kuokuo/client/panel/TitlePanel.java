@@ -11,8 +11,8 @@ import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -42,18 +42,21 @@ public class TitlePanel extends HorizontalPanel implements ClickHandler, KeyPres
 
     protected CheckBox chkOther;
 
-    protected HTML logo;
+    protected SimplePanel logoSpacer;
     
     public TitlePanel()
     {
-        this.setSpacing(5);
-        logo = new HTML("<img height='90' src='images/kuokuo.jpg' style='cursor:hand'>");
-        logo.addClickHandler(this);
-        this.add(logo);
+        SimplePanel logoSpacer = new SimplePanel();
+        logoSpacer.setWidth("160px");
+        this.add(logoSpacer);
+        this.setStylePrimaryName("title");
         
         VerticalPanel searchPanel = new VerticalPanel();
 
-        searchPanel.add(new HTML("<br>"));
+        SimplePanel spacer = new SimplePanel();
+        spacer.setHeight("50px");
+        searchPanel.add(spacer);
+        
         HorizontalPanel firstRow = new HorizontalPanel();
         firstRow.setSpacing(5);
         firstRow.setVerticalAlignment(HorizontalPanel.ALIGN_MIDDLE);
@@ -130,9 +133,9 @@ public class TitlePanel extends HorizontalPanel implements ClickHandler, KeyPres
                 Search.getInstance().doSearch(txtQuery.getValue());
             }
         }
-        if(event.getSource().equals(logo))
+        if(event.getSource().equals(logoSpacer))
         {
-            Search.getInstance().gotoWelcome();
+            Search.getInstance().gotoHomepage();
         }
     }
 
@@ -150,4 +153,9 @@ public class TitlePanel extends HorizontalPanel implements ClickHandler, KeyPres
         }
     }
 
+    public void reset()
+    {
+        txtQuery.setText("");
+    }
+    
 }

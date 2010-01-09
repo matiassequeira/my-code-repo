@@ -1,48 +1,22 @@
 /** Add css rules here for your application. */
-.sendButton {
-	display: block;
-	font-size: 16pt;
-}
-
-.dialogVPanel {
-	margin: 5px;
-}
-
-.serverResponseLabelError {
-	color: red;
-}
-
-/** Set ids using widget.getElement().setId("idOfElement") */
-#closeButton {
-	margin: 15px 6px 6px;
-}
-
-.page-footer
+.root table td, .root select, .root button
 {
+	font-family: 宋体;
 	font-size: 12px;
-}
-
-.paging-enable
-{
-	color: blue; cursor: hand; text-decoration: underline; font-size: 14px;
-}
-
-.paging-disable
-{
-	color: gray; font-size: 14px;
-}
-
-.paging-current
-{
-	color: black; font-weight: bold; font-size: 14px;
-}
-
-.paging-text
-{
-	color: black; font-size: 14px;
 }
 
 .item-gray
 {
 	color: gray; font-size: 12px;
+}
+
+.gwt-CheckBox .gwt-CheckBox-disabled
+{
+	color: gray;
+}
+
+.root .gwt-Button
+{
+	font-family: 宋体;
+	font-size: 12px;
 }

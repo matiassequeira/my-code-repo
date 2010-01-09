@@ -17,7 +17,7 @@ public class DoubanResource extends PersistentObject
     private String doubanId;
     
     @Column(name = "AVERAGE")
-    private float average;
+    private double average;
     
     @Column(name = "NUMRATERS")
     private int numRaters;
@@ -46,7 +46,7 @@ public class DoubanResource extends PersistentObject
     /**
      * @return the average
      */
-    public float getAverage()
+    public double getAverage()
     {
         return average;
     }
@@ -54,7 +54,7 @@ public class DoubanResource extends PersistentObject
     /**
      * @param average the average to set
      */
-    public void setAverage(float average)
+    public void setAverage(double average)
     {
         this.average = average;
     }

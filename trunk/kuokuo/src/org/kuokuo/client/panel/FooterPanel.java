@@ -25,6 +25,7 @@ public class FooterPanel extends VerticalPanel
     {
         this.setHorizontalAlignment(ALIGN_CENTER);
         this.setSpacing(5);
+        this.setStylePrimaryName("footer");
         status = new HTML();
         status.setStyleName("page-footer");
         refresh();
