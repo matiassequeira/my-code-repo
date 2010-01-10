@@ -1,9 +1,13 @@
 .root a {
 	color: #00AAD9;
+	padding: 2px;
+	cursor: pointer;
 }
 
 .root a:hover {
 	text-decoration: none;
+	background:#003399 none repeat scroll 0 0;
+	color:#FFFFFF;
 }
 
 .centerWrapper
