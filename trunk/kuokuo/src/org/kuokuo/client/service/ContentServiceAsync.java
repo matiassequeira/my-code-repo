@@ -8,6 +8,7 @@ import org.kuokuo.client.data.DoubanResource;
 import org.kuokuo.client.data.GameItem;
 import org.kuokuo.client.data.KuokuoItem;
 import org.kuokuo.client.data.MovieItem;
+import org.kuokuo.client.data.AppStatus;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -26,4 +27,6 @@ public interface ContentServiceAsync
     void getBookItem(BookItem item, AsyncCallback<BookItem> callback);
 
     void getDoubanResource(String type, String queryWords, AsyncCallback<DoubanResource> callback);
+
+    void getAppStatus(AsyncCallback<AppStatus> callback);
 }

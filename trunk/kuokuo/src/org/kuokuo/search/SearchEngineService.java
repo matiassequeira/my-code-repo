@@ -127,7 +127,6 @@ public class SearchEngineService
         long start = System.currentTimeMillis();
         result.setTime((float) (System.currentTimeMillis() - start) / (float) 1000);
         result.setItems(dao.fullTextSearch(queryStr));
-        status.setQueryCount(status.getQueryCount() + 1);
         return result;
     }
 }

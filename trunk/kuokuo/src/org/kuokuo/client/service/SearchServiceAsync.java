@@ -1,6 +1,5 @@
 package org.kuokuo.client.service;
 
-import org.kuokuo.client.data.IndexStatus;
 import org.kuokuo.client.data.KuokuoItem;
 import org.kuokuo.client.data.PaginationItem;
 import org.kuokuo.client.data.QueryResult;
@@ -13,8 +12,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public interface SearchServiceAsync
 {
     public void query(String name, AsyncCallback<QueryResult> callback);
-    
-    public void getIndexStatus(AsyncCallback<IndexStatus> callback);
     
     public void getKuokuoItemOrderByModified(int start, int pageSize, AsyncCallback<PaginationItem<KuokuoItem>> callback);
     

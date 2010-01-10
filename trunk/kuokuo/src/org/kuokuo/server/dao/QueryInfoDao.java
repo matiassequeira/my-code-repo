@@ -28,5 +28,26 @@ public class QueryInfoDao extends AbstractDao
             releaseSession(session);
         }
     }
+    
+    /**
+     * get visitor count
+     * 
+     * @return
+     */
+    public long getQueryCount()
+    {
+        long count = 0;
+        Session session = getSession();
+        try
+        {
+            String hql = "select count(queryInfo.id) from QueryInfo as queryInfo";
+            count = ((Long) (session.createQuery(hql).iterate().next())).longValue();
+            return count;
+        }
+        finally
+        {
+            releaseSession(session);
+        }
+    }
 
 }
