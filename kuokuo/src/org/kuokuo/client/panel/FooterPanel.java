@@ -5,7 +5,8 @@ package org.kuokuo.client.panel;
 
 import org.kuokuo.client.ServiceFactory;
 import org.kuokuo.client.data.IndexStatus;
-import org.kuokuo.client.service.SearchServiceAsync;
+import org.kuokuo.client.data.AppStatus;
+import org.kuokuo.client.service.ContentServiceAsync;
 
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -48,22 +49,22 @@ public class FooterPanel extends VerticalPanel
 
     public void refresh()
     {
-        SearchServiceAsync searchService = ServiceFactory.SERVICE_SEARCH;
-        
-        searchService.getIndexStatus(new AsyncCallback<IndexStatus>()
+        ContentServiceAsync service = ServiceFactory.SERVICE_CONTENT;
+        service.getAppStatus(new AsyncCallback<AppStatus>()
         {
-
-            public void onSuccess(IndexStatus result)
+            public void onSuccess(AppStatus result)
             {
-                long docCount = result.getDocCount();
-                long indexCost = result.getIndexCost();
-                String lastUpdate = result.getLastUpdate();
-                String str = "系统启动于" + result.getStartDate() + "，";
+                IndexStatus indexStatus = result.getIndexStatus();
+                long docCount = indexStatus.getDocCount();
+                long indexCost = indexStatus.getIndexCost();
+                String lastUpdate = indexStatus.getLastUpdate();
+                
+                String str = "自2009年1月有" + result.getVisitorCount() + "人访问本系统，";
                 str = str + "处理" + result.getQueryCount() + "条查询。";
                 str = str + "最后一次更新：" + lastUpdate + "，索引" + docCount + "个对象，耗时" + (float) indexCost / 1000f + "秒";
                 status.setText(str);
             }
-
+            
             public void onFailure(Throwable caught)
             {
 

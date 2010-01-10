@@ -4,11 +4,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.kuokuo.CachedAppStatus;
 import org.kuokuo.client.data.DoubanResource;
-import org.kuokuo.client.data.IndexStatus;
 import org.kuokuo.client.data.KuokuoItem;
 import org.kuokuo.client.data.PaginationItem;
 import org.kuokuo.client.data.QueryInfo;
@@ -19,7 +18,6 @@ import org.kuokuo.search.SearchEngineService;
 import org.kuokuo.server.dao.DoubanResourceDao;
 import org.kuokuo.server.dao.KuokuoItemDao;
 import org.kuokuo.server.dao.QueryInfoDao;
-import org.kuokuo.server.dao.VisitorInfoDao;
 import org.kuokuo.server.job.DoubanJob;
 import org.kuokuo.server.job.douban.QueryResource;
 
@@ -44,6 +42,7 @@ public class SearchServiceImpl extends AbstractServiceServlet implements SearchS
             
             QueryInfoDao dao = new QueryInfoDao();
             dao.saveOrUpdate(queryInfo);
+            CachedAppStatus.getCached().increaseQuery();
 
             QueryResult queryResult = SearchEngineService.getInstance().query(input);
             List<KuokuoItem> list = queryResult.getItems();
@@ -58,33 +57,6 @@ public class SearchServiceImpl extends AbstractServiceServlet implements SearchS
             e.printStackTrace();
         }
         return new QueryResult();
-    }
-
-    /**
-     * @see org.kuokuo.client.service.SearchService#getIndexStatus()
-     */
-    public IndexStatus getIndexStatus()
-    {
-        HttpSession session = getSession();
-        VisitorInfo visitorInfo = (VisitorInfo) session.getAttribute("visitorInfo");
-        if(visitorInfo == null)
-        {
-            visitorInfo = new VisitorInfo();
-            HttpServletRequest request = getThreadLocalRequest();
-            visitorInfo.setRemoteAddr(request.getRemoteAddr());
-            visitorInfo.setRemoteHost(request.getRemoteHost());
-            visitorInfo.setRemoteUser(request.getRemoteUser());
-            visitorInfo.setUserAgent(request.getHeader("User-Agent"));
-            visitorInfo.setFirstVisit(new Date());
-        }
-        visitorInfo.setLastVisit(new Date());
-
-        VisitorInfoDao dao = new VisitorInfoDao();
-        dao.saveOrUpdate(visitorInfo);
-        
-        session.setAttribute("visitorInfo", visitorInfo);
-        
-        return SearchEngineService.getInstance().getIndexStatus();
     }
 
     /**

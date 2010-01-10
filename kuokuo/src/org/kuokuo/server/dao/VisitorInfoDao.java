@@ -9,7 +9,7 @@ import org.kuokuo.client.data.VisitorInfo;
 /**
  * @version Jan 10, 2010 12:27:23 AM
  * @author Dingmeng (xuedm79@gmail.com)
- *
+ * 
  */
 public class VisitorInfoDao extends AbstractDao
 {
@@ -35,4 +35,24 @@ public class VisitorInfoDao extends AbstractDao
         }
     }
 
+    /**
+     * get visitor count
+     * 
+     * @return
+     */
+    public long getVisitorCount()
+    {
+        long count = 0;
+        Session session = getSession();
+        try
+        {
+            String hql = "select count(visitorInfo.id) from VisitorInfo as visitorInfo";
+            count = ((Long) (session.createQuery(hql).iterate().next())).longValue();
+            return count;
+        }
+        finally
+        {
+            releaseSession(session);
+        }
+    }
 }

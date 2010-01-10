@@ -8,6 +8,7 @@ import org.kuokuo.client.data.DoubanResource;
 import org.kuokuo.client.data.GameItem;
 import org.kuokuo.client.data.KuokuoItem;
 import org.kuokuo.client.data.MovieItem;
+import org.kuokuo.client.data.AppStatus;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -54,4 +55,11 @@ public interface ContentService extends RemoteService
      * @return
      */
     public DoubanResource getDoubanResource(String type, String queryWords);
+
+    /**
+     * get app status
+     * 
+     * @return
+     */
+    public AppStatus getAppStatus();
 }

@@ -19,11 +19,7 @@ public class IndexStatus implements IsSerializable
 
     private String lastUpdate;
 
-    private long queryCount = 0;
-
     private String startDate;
-    
-    
     
     /**
      * @return Returns the startDate.
@@ -91,22 +87,4 @@ public class IndexStatus implements IsSerializable
     {
         this.lastUpdate = lastUpdate;
     }
-
-    /**
-     * @return Returns the queryCount.
-     */
-    public long getQueryCount()
-    {
-        return queryCount;
-    }
-
-    /**
-     * @param queryCount
-     *            The queryCount to set.
-     */
-    public synchronized void setQueryCount(long queryCount)
-    {
-        this.queryCount = queryCount;
-    }
-
 }
