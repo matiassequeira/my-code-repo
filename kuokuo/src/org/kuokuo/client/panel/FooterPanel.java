@@ -33,7 +33,7 @@ public class FooterPanel extends VerticalPanel
         refresh();
         this.add(status);
 
-        HTML html = new HTML("Kuokuo 1.4 <a href='mailto:xuedm79@gmail.com'>报告错误</a> Powered by GWT, Lucene, Hibernate & MMSeg4J");
+        HTML html = new HTML("Kuokuo 1.5 <a href='mailto:xuedm79@gmail.com'>报告错误</a> Powered by GWT, Lucene, Hibernate & MMSeg4J");
         html.setStyleName("page-footer");
         this.add(html);
         
@@ -59,7 +59,7 @@ public class FooterPanel extends VerticalPanel
                 long indexCost = indexStatus.getIndexCost();
                 String lastUpdate = indexStatus.getLastUpdate();
                 
-                String str = "自2009年1月有" + result.getVisitorCount() + "人访问本系统，";
+                String str = "自2009年1月11日 有" + result.getVisitorCount() + "人访问本系统，";
                 str = str + "处理" + result.getQueryCount() + "条查询。";
                 str = str + "最后一次更新：" + lastUpdate + "，索引" + docCount + "个对象，耗时" + (float) indexCost / 1000f + "秒";
                 status.setText(str);
