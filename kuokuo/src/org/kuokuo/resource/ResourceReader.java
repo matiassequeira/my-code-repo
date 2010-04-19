@@ -89,6 +89,12 @@ public class ResourceReader
         if(file.isHidden()){
             return true;
         }
+        //Avoid indexing folders like 'Sample'
+        //TODO make it configurable, say a blacklist
+        if(file.isDirectory()&&file.getName().equalsIgnoreCase("sample")){
+            return true;
+        }
+        
         return false;
     }
 
