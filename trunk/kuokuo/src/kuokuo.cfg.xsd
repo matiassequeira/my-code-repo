@@ -20,6 +20,14 @@
 	</complexType>
 
 	<complexType name="resource-type">
+		<sequence maxOccurs="unbounded" minOccurs="0">
+			<element name="exclude">
+				<complexType>
+					<attribute name="value" type="string"
+						use="required" />
+				</complexType>
+			</element>
+		</sequence>
 		<attribute name="path" type="string" use="required" />
 		<attribute name="type" default="other">
 			<simpleType>
@@ -31,8 +39,8 @@
 				</restriction>
 			</simpleType>
 		</attribute>
-		<attribute name="include-file" type="boolean" default="true"/>
-		<attribute name="include-folder" type="boolean" default="false"/>
+		<attribute name="include-file" type="boolean" default="true" />
+		<attribute name="include-folder" type="boolean" default="false" />
 	</complexType>
 
 	<complexType name="index-type">

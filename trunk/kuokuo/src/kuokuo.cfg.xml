@@ -2,7 +2,9 @@
 <configuration xmlns="http://www.example.org/kuokuo.cfg"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<resources>
-		<resource path="..\\test\\data\\movie" type="movie" include-file="false" include-folder="true" />
+		<resource path="..\\test\\data\\movie" type="movie" include-file="false" include-folder="true">
+			<exclude value="test?"></exclude>
+		</resource>
 		<resource path="..\\test\\data\\music" type="music" include-file="true" include-folder="true" />
 		<resource path="..\\test\\data\\game" type="game" include-file="false" include-folder="true" />
 		<resource path="..\\test\\data\\other" type="other" include-file="true" include-folder="true" />

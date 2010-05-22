@@ -6,8 +6,10 @@ package org.kuokuo.resource;
 import java.io.File;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 /**
  * Resource reader
@@ -26,6 +28,7 @@ public class ResourceReader
         includeFolder = source.isIncludeFolder();
         includeFile = source.isIncludeFile();
         type = source.getType();
+        excludes = source.getExcludes();
         
         files = new Vector<File>();
         loadFiles(new File(rootPath));
@@ -38,6 +41,8 @@ public class ResourceReader
     protected boolean includeFile = false;
 
     protected String type;
+    
+    protected Set<Pattern> excludes;
     
     private void loadFiles(File path)
     {
@@ -53,6 +58,10 @@ public class ResourceReader
         for (File file : files)
         {
             if (needIgnoreFile(file))
+            {
+                continue;
+            }
+            if(excludes != null && isExcluded(file.getName()))
             {
                 continue;
             }
@@ -72,6 +81,23 @@ public class ResourceReader
         logger.info("Scanned "+path);
     }
     
+    private boolean isExcluded(String name)
+    {
+        if (name == null)
+            return true;
+
+        name = name.toLowerCase();
+        for (Pattern pattern : excludes)
+        {
+            if (pattern.matcher(name).matches())
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
     /**
      * Determine whether the specified file need ignore while indexing
      * @param file
@@ -89,12 +115,6 @@ public class ResourceReader
         if(file.isHidden()){
             return true;
         }
-        //Avoid indexing folders like 'Sample'
-        //TODO make it configurable, say a blacklist
-        if(file.isDirectory()&&file.getName().equalsIgnoreCase("sample")){
-            return true;
-        }
-        
         return false;
     }
 

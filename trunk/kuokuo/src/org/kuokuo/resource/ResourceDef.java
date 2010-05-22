@@ -3,6 +3,9 @@
  */
 package org.kuokuo.resource;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * Folder source
@@ -19,6 +22,8 @@ public class ResourceDef
     private boolean checkFolder = true;
 
     private boolean checkFile = true;
+
+    private Set<Pattern> excludes;
 
     /**
      * @return Returns the path.
@@ -86,5 +91,25 @@ public class ResourceDef
     public void setIncludeFile(boolean checkFile)
     {
         this.checkFile = checkFile;
+    }
+
+    public void addExclude(String exclude)
+    {
+        if (excludes == null)
+            excludes = new HashSet<Pattern>();
+        
+        if(exclude != null)
+        {
+            exclude = exclude.toLowerCase();
+            exclude = exclude.replace('.', '#').replaceAll("#", "\\\\.").replace('*', '#').replaceAll("#", ".*").replace('?', '#').replaceAll("#", ".?");
+            exclude = "^" + exclude + "$";
+            Pattern p = Pattern.compile(exclude);
+            excludes.add(p);
+        }
+    }
+
+    public Set<Pattern> getExcludes()
+    {
+        return excludes;
     }
 }
