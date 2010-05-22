@@ -120,6 +120,17 @@ public class Configuration
         def.setType((el.hasAttribute("type")) ? el.getAttribute("type") : KuokuoItem.TYPE_OTHER);
         def.setIncludeFolder((el.hasAttribute("include-folder")) ? Boolean.parseBoolean(el.getAttribute("include-folder")) : true);
         def.setIncludeFile((el.hasAttribute("include-file")) ? Boolean.parseBoolean(el.getAttribute("include-file")) : false);
+        
+        for (Node node = el.getFirstChild(); node != null; node = node.getNextSibling())
+        {
+            if (node instanceof Element && "exclude".equals(node.getNodeName()))
+            {
+                if(((Element)node).hasAttribute("value"))
+                {
+                    def.addExclude(((Element)node).getAttribute("value"));
+                }
+            }
+        }
         return def;
     }
 
