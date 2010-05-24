@@ -33,7 +33,7 @@ public class FooterPanel extends VerticalPanel
         refresh();
         this.add(status);
 
-        HTML html = new HTML("Kuokuo 1.5 <a href='mailto:xuedm79@gmail.com'>报告错误</a> Powered by GWT, Lucene, Hibernate & MMSeg4J");
+        HTML html = new HTML("Kuokuo 1.5.1 <a href='mailto:xuedm79@gmail.com'>报告错误</a> Powered by GWT, Lucene, Hibernate & MMSeg4J");
         html.setStyleName("page-footer");
         this.add(html);
         
